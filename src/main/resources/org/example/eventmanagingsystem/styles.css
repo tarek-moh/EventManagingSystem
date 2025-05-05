@@ -276,3 +276,53 @@
     -fx-text-fill: #374151; /* Neutral dark gray */
     -fx-padding: 0 12px; /* Horizontal spacing only */
 }
+
+/* profilepage */
+.root-profile {
+    -fx-background-color: #2F58A7;
+    -fx-text-fill: white;
+}
+
+/* profilepage */
+.dnavyark- {
+    -fx-background-color: #2A384E;
+    -fx-text-fill: white; /* Optional: good for contrast */
+}
+
+.bg-asueng {
+    -fx-background-color: #2f5fa7;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+}
+
+
+.profile-textfield {
+    /* Gradient background with glass effect */
+    -fx-background-color: linear-gradient(to bottom right, rgba(245, 247, 250, 0.8), rgba(195, 207, 226, 0.9));
+
+    /* Modern rounded corners */
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+
+    /* Glass morphism effect */
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1px;
+    -fx-background-insets: 0;
+
+    /* Subtle shadow with depth */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 12, 0.1, 0, 3);
+
+    /* Smooth transition for focus */
+    -fx-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.profile-textfield:focused {
+    /* Enhanced focus state */
+    -fx-border-color: rgba(42, 56, 78, 0.4);
+    -fx-effect: dropshadow(gaussian, rgba(42, 56, 78, 0.2), 15, 0.2, 0, 4);
+    -fx-background-color: linear-gradient(to bottom right, rgba(245, 247, 250, 0.9), rgba(195, 207, 226, 1));
+}
+
+.profile-textfield:hover {
+    /* Interactive hover state */
+    -fx-effect: dropshadow(gaussian, rgba(42, 56, 78, 0.15), 15, 0.15, 0, 4);
+}

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="951.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eventmanagingsystem.managers.ProfileManager">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.40001220703124" minWidth="10.0" prefWidth="210.2000244140625" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="759.1999816894531" minWidth="10.0" prefWidth="740.7999755859375" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="519.2" minHeight="9.600000190734875" prefHeight="76.59999389648438" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="591.0000061035156" minHeight="0.0" prefHeight="591.0000061035156" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox prefHeight="545.0" prefWidth="658.0" stylesheets="@../styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <HBox prefHeight="77.0" prefWidth="741.0" />
+            <HBox maxHeight="39.0" prefHeight="40.0" prefWidth="741.0" styleClass="profile-textfield" stylesheets="@../styles.css">
+               <children>
+                  <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="            Username     " wrappingWidth="150.13666486740112">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="usernameField" prefHeight="26.0" prefWidth="234.0" text="Label" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets top="9.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="741.0" />
+            <HBox prefHeight="40.0" prefWidth="741.0" styleClass="profile-textfield" stylesheets="@../styles.css">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="             ID " wrappingWidth="163.86870396137238">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Label fx:id="IdField" prefHeight="26.0" prefWidth="182.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="9.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="741.0" />
+            <HBox prefHeight="40.0" prefWidth="741.0" styleClass="profile-textfield" stylesheets="@../styles.css">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="            Gender" wrappingWidth="165.82233428955078">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Label fx:id="genderField" prefHeight="26.0" prefWidth="186.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="200.0" />
+            <HBox prefHeight="40.0" prefWidth="200.0" styleClass="profile-textfield" stylesheets="@../styles.css">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="            Date of Birth" wrappingWidth="159.83716583251953">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Label fx:id="dobField" prefHeight="26.0" prefWidth="238.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="200.0" />
+            <HBox prefHeight="40.0" prefWidth="200.0" styleClass="profile-textfield" stylesheets="@../styles.css">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="            Address" wrappingWidth="158.4365997314453">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Label fx:id="addressField" prefHeight="26.0" prefWidth="477.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox prefHeight="211.0" prefWidth="741.0">
+               <children>
+                  <StackPane prefHeight="41.0" prefWidth="739.0">
+                     <children>
+                        <Label text="Reset Password" textFill="#2f5fa7" underline="true" StackPane.alignment="CENTER_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <HBox prefHeight="110.0" prefWidth="724.0" styleClass="bg-asueng" stylesheets="@../styles.css" GridPane.columnIndex="1" />
+      <HBox accessibleRole="IMAGE_VIEW" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="77.0" prefWidth="198.0" styleClass="bg-asueng" stylesheets="@../styles.css">
+         <children>
+            <ImageView fitHeight="58.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/asueng.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" top="8.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="dnavyark-" stylesheets="@../styles.css" GridPane.rowIndex="1">
+         <children>
+            <HBox alignment="CENTER" prefHeight="174.0" prefWidth="210.0">
+               <children>
+                  <ImageView fitHeight="101.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/user.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="210.0">
+               <children>
+                  <Separator maxWidth="-Infinity" prefHeight="22.0" prefWidth="167.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Separator>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="210.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/house-laptop.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="dashboardLink" text="Dashboard" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</GridPane>

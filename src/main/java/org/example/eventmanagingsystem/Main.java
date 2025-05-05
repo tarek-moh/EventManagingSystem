@@ -62,6 +62,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.eventmanagingsystem.managers.LoginManager;
+import org.example.eventmanagingsystem.managers.ProfileManager;
 
 import java.io.IOException;
 
@@ -70,11 +71,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         try {
             // 1. Create the loader instance (don't call load() yet)
-			FXMLLoader loader = new FXMLLoader(getClass().getResource
-					("/org/example/eventmanagingsystem/views/loginView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource
+                        ("/org/example/eventmanagingsystem/views/loginView.fxml"));
 
             // 2. First load() call - this actually loads the FXML
-            Parent root = loader.load();
+            Parent root = null;
+
+            root = loader.load();
 
             // 3. Now get the controller and set the stage
             LoginManager loginManager = loader.getController();

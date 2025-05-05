@@ -226,6 +226,11 @@ public class DashboardManager {
             loadAllAttendeesTask.cancel();
     }
 
+    @FXML
+    private void toggleProfile()
+    {}
+
+
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {
         // Initial state
         form.setScaleX(0.7);
