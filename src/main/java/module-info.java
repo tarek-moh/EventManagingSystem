@@ -6,4 +6,7 @@ module org.example.eventmanagingsystem {
 	exports org.example.eventmanagingsystem;
 	exports org.example.eventmanagingsystem.managers;
 	opens org.example.eventmanagingsystem.managers to javafx.fxml;
+
+	opens org.example.eventmanagingsystem.models to javafx.base;
+
 }
