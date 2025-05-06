@@ -1,6 +1,8 @@
 module org.example.eventmanagingsystem {
 	requires javafx.controls;
 	requires javafx.fxml;
+    requires javafx.graphics;
+	requires java.desktop;
 
 	opens org.example.eventmanagingsystem to javafx.fxml;
 	exports org.example.eventmanagingsystem;
