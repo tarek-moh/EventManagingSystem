@@ -5,6 +5,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.services.Database;
+import org.example.eventmanagingsystem.models.Attendee;
 
 import java.util.ArrayList;
 
@@ -94,6 +96,9 @@ public class DashboardManager {
     @FXML private TableColumn<Room, String> roomIdColumn;
     @FXML private TableColumn<Room, String> roomCapacityColumn;
 
+    //******************* Balance  *******************//
+    @FXML private Label balanceLabel;
+
 
     @FXML
     public void initialize() {
@@ -124,8 +129,41 @@ public class DashboardManager {
         roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
         roomCapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         roomsTable.setItems(rooms);
-    }
 
+        // TODO: need to call the butTicket(Event) from the specific Attendee user
+        buyTicketColumn.setCellFactory(param -> new TableCell<>(){
+            private final Button buyButton = new Button("Buy Ticket");
+
+            {
+                buyButton.setOnAction(event -> {
+//                    Event eventObj = getTableView().getItems().get(getIndex());
+//                    if((Attendee)currentUser.buyTicket(eventObj))
+//                    {
+//                        showAlert("")
+//                    }
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(buyButton);
+                }
+            }
+        });
+
+        // TODO: needs current user from session inorder to call their respective getBalance
+//        balanceLabel.textProperty().bind(
+//                Bindings.createStringBinding(() -> {
+//                            double bal = currentUser.getWallet().getBalance();
+//                            String color = bal < 0 ? "red" : bal < 50 ? "orange" : "green";
+//                            return String.format("-fx-text-fill: %s; Balance: $%.2f", color, bal);
+//                        },
+//                        currentUser.getWallet().balanceProperty()
+//                );
+    }
     @FXML
     private void toggleEventForm() {
         if (isEventVisible.get()) {
@@ -422,6 +460,11 @@ public class DashboardManager {
     private void toggleProfile()
     {}
 
+    @FXML
+    private void logout()
+    {
+
+    }
 
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {
         // Initial state

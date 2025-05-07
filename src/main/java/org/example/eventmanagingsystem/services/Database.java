@@ -1,6 +1,7 @@
 package org.example.eventmanagingsystem.services;
 
 import org.example.eventmanagingsystem.models.*;
+import org.example.eventmanagingsystem.util.SplayTree;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Database{
     private static ArrayList<Attendee> attendeeList = new ArrayList<Attendee>();
     private static ArrayList<Organizer> organizerList = new ArrayList<Organizer>();
     private static ArrayList<Admin> adminList = new ArrayList<Admin>();
-    private static ArrayList<Event> eventList = new ArrayList<Event>();
+    private static SplayTree<Event> eventTree = new SplayTree<Event>();
     private static ArrayList<Room> roomList = new ArrayList<Room>();
     private static ArrayList<myCategory> categoryList = new ArrayList<myCategory>();
 
@@ -54,11 +55,11 @@ public class Database{
         categoryList.add(new myCategory("Stand-up Comedy"));
         categoryList.add(new myCategory("Business & Startups"));
 
-        eventList.add(new Event("Nocturne in C# Minor", "Frederic Chopin piece", organizerList.get(0), "Classical Music", "10-12", 100));
-        eventList.add(new Event("Jazz Night", "Smooth jazz evening with live saxophone", organizerList.get(1), "Jazz", "18-20", 150));
-        eventList.add(new Event("Tech Talk 2025", "Exploring the future of AI and Quantum Computing", organizerList.get(2), "Technology", "14-16", 0));
-        eventList.add(new Event("Painting Workshop", "Hands-on acrylic painting workshop for beginners", organizerList.get(3), "Art", "09-11", 75));
-        eventList.add(new Event("Poetry Slam", "An open mic night for poetry lovers", organizerList.get(4), "Literature", "20-22", 50));
+        eventTree.insert(new Event("Nocturne in C# Minor", "Frederic Chopin piece", organizerList.get(0), "Classical Music", "10-12", 100));
+        eventTree.insert(new Event("Jazz Night", "Smooth jazz evening with live saxophone", organizerList.get(1), "Jazz", "18-20", 150));
+        eventTree.insert(new Event("Tech Talk 2025", "Exploring the future of AI and Quantum Computing", organizerList.get(2), "Technology", "14-16", 0));
+        eventTree.insert(new Event("Painting Workshop", "Hands-on acrylic painting workshop for beginners", organizerList.get(3), "Art", "09-11", 75));
+        eventTree.insert(new Event("Poetry Slam", "An open mic night for poetry lovers", organizerList.get(4), "Literature", "20-22", 50));
     }
 
     // Getters
@@ -71,12 +72,8 @@ public class Database{
     public static ArrayList<Admin> getAdminList() {
         return adminList;
     }
-    public static ArrayList<Event> getEventList() {
-        return eventList;
-    }
-    public static ArrayList<Room> getRoomList() {
-        return roomList;
-    }
+    public static ArrayList<Event> getEventList() {return eventTree.inOrderTraversal();}
+    public static ArrayList<Room> getRoomList() {return roomList;}
     public static ArrayList<myCategory> getCategoryList() {
         return categoryList;
     }

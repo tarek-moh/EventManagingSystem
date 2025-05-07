@@ -9,6 +9,7 @@ import org.example.eventmanagingsystem.services.Database;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 /**
  * The {@code models.Event} class represents an event that can be booked and attended.
@@ -30,7 +31,7 @@ import java.util.Date;
  *
  * @author Nour
  */
-public class Event {
+public class Event implements Comparable<Event> {
     //attributes
     private static int evCounter = 1000;
     private String eventID;
@@ -65,6 +66,16 @@ public class Event {
         soldTickets=new ArrayList<>();
         attendees=new ArrayList<>();
         this.ticketPrice = ticketPrice;
+    }
+
+    @Override
+    public int compareTo(Event other) {
+        return Integer.compare(this.priorityScore(), other.priorityScore());
+    }
+
+    private int priorityScore()
+    {
+        return soldTickets.size();
     }
 
     //methods
