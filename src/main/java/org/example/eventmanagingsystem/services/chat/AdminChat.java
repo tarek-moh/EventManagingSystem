@@ -9,7 +9,7 @@ import javafx.geometry.Insets;
 import java.io.*;
 import java.net.*;
 
-public class AminChatServer
+public class AdminChat
 {
 
     public class ChatServer extends Application {
