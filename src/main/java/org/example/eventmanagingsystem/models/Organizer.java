@@ -19,12 +19,15 @@ public class Organizer extends User {
         org.showDashboard();
     }
 
-    public Organizer() {    super();    }    // No-arg constructor
+    public Organizer() {
+        this.ID = 20000 + organizerCount++ ;
+        this.wallet = new Wallet();
+    }    // No-arg constructor
 
     // Constructor with parameters
     public Organizer(String userName, String password, LocalDate dateOfBirth) {
         super(userName, password, dateOfBirth);
-        this.ID = 20000 + organizerCount ;
+        this.ID = 20000 + organizerCount++ ;
         this.wallet = new Wallet();
     }
 
@@ -358,7 +361,7 @@ public class Organizer extends User {
         int year = getValidInt("Enter year of birth (e.g., 2000): ", 1, 2024);
         int month = getValidInt("Enter month of birth (1-12): ", 1, 12);
         int day = getValidInt("Enter day of birth (1-31): ", 1, 31);
-        setDateOfBirth(year, month, day);
+        setDateOfBirth(LocalDate.of(year, month, day));
     }
 
     // Utility methods

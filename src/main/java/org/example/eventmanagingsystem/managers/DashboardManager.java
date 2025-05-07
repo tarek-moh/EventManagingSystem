@@ -124,6 +124,9 @@ public class DashboardManager {
         roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
         roomCapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         roomsTable.setItems(rooms);
+
+        //registerButton.setOnAction(event->handleRegister());
+        eventCreateButton.setOnAction(event->handleCreateEvent());
     }
 
     @FXML
@@ -155,7 +158,23 @@ public class DashboardManager {
         }
     }
     @FXML private void handleCreateEvent()
-    {}
+    {
+        String title = eventTitleField.getText();
+        String descrip = eventDescriptionField.getText();
+        String categori = eventCategoryField.getValue();
+        String tickprice = eventPriceField.getText();
+        // timelot = eventTimeSlotField.getText();
+        try {
+            double price = Double.parseDouble(tickprice);
+            EventManager.addEvent(title, descrip, categori, price);
+        }
+        catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for price.");
+        }
+        catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
+    }
 
     @FXML
     private void toggleRoomForm() {
@@ -189,6 +208,23 @@ public class DashboardManager {
     @FXML
     private void handleCreateRoom()
     {
+        String roomCap = roomCapacityField.getText();
+        // String timelot = roomstart and end get()
+
+        try
+        {
+            if (roomCap == null || roomCap.isEmpty())
+                throw new IllegalArgumentException("Capacity cannot be left empty");
+            int cap = Integer.parseInt(roomCap);
+            RoomManager.addRoom(cap);
+        }
+        catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for capacity.");
+        }
+        catch(IllegalArgumentException ex)
+        {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
 
     }
 
@@ -225,7 +261,16 @@ public class DashboardManager {
 
     @FXML
     private void handleCreateCategory()
-    {}
+    {
+        String catName = categoryNameField.getText();
+        try{
+            CategoryManager.createCategory(catName);
+        }
+        catch (IllegalArgumentException ex)
+        {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
+    }
 
     @FXML
     private void toggleAllAttendeesForm()
@@ -422,6 +467,14 @@ public class DashboardManager {
     private void toggleProfile()
     {}
 
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.setResizable(true);
+        alert.showAndWait();
+    }
 
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {
         // Initial state

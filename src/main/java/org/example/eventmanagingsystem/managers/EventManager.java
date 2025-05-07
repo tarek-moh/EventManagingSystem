@@ -24,4 +24,17 @@ public class EventManager {
         e.removeEventAttendee(attendee);
     }
 
+    public static void addEvent(String title, String description, String category, double ticketprice)
+            throws IllegalArgumentException    {
+        Event ev = new Event();
+        ev.setTitle(title);
+        ev.setDescription(description);
+        ev.setCategory(category);
+        ev.setTicketPrice(ticketprice);
+        //ev.setTimeslot();
+
+        Database.getEventList().add(ev);
+        System.out.println("Event added successfully");
+    }
+
 }

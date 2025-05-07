@@ -25,19 +25,23 @@ public class Attendee extends User
         attendee.showDashboard();
     }
 
-    public Attendee() {    super();     } // no-arg-constructor
+    public Attendee() {
+        this.ID = 10000 + attendeeCount++;
+        this.wallet = new Wallet();
+        this.ticketList = new ArrayList<Ticket>();
+        this.interestList = new ArrayList<myCategory>();
+    } // no-arg-constructor
 
     // parameterized constructor
     public Attendee(String userName, String password, LocalDate dateOfBirth, String address, Gender gender) 
     {
         super(userName, password, dateOfBirth);
-        this.ID = 10000 + attendeeCount;
+        this.ID = 10000 + attendeeCount++;
         this.address = address;
         this.gender = gender;
          this.wallet = new Wallet();
          this.ticketList = new ArrayList<Ticket>();
          this.interestList = new ArrayList<myCategory>();
-        attendeeCount++;
     }
 
     @Override
@@ -282,16 +286,9 @@ public class Attendee extends User
 
     public Gender getGender() {   return this.gender;   }
 
-    public void setGender(int select) 
+    public void setGender(Gender gender1)
     {    
-                if (select == 1) 
-                {
-                    this.gender = Gender.MALE;
-                } 
-                else if (select == 2) 
-                {
-                    this.gender = Gender.FEMALE;
-                }
+                this.gender = gender1;
     }
 
     public ArrayList<myCategory> getInterests() {

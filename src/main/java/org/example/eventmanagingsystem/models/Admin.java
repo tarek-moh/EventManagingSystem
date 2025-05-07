@@ -200,7 +200,7 @@ public class Admin extends User {
         int year = getValidInt("Enter year of birth (e.g., 2000): ", 1, 2024);
         int month = getValidInt("Enter month of birth (1-12): ", 1, 12);
         int day = getValidInt("Enter day of birth (1-31): ", 1, 31);
-        setDateOfBirth(year, month, day);
+        setDateOfBirth(LocalDate.of(year, month, day));
     }
 
     private void changeRole() {
