@@ -62,6 +62,7 @@ public class RoomManager {
     {
         Room r = new Room();
         r.setCapacity(newRoomCapacity);
+        // r.set price
 
         Database.getRoomList().add(r);
         System.out.println("Room added successfully");
