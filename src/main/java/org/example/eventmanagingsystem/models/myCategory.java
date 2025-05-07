@@ -9,7 +9,7 @@ import org.example.eventmanagingsystem.services.Database;
  * <p>
  * It provides methods to add events and retrieve all events associated
  * with this category.
- *
+
  * Example usage:
  * <pre>
  *     Category musicCategory = new Category("Music");
@@ -45,7 +45,7 @@ public class myCategory {
         return count;
     }
 
-    public String getName(){ //notice i didn't add it to the UML diagram
+    public String getName(){ //notice I didn't add it to the UML diagram
         return this.name;
     }
 
