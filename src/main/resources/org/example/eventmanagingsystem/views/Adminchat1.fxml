@@ -19,8 +19,8 @@
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
             <TextField id="inputField" fx:id="inputField" promptText="Enter massage..." HBox.hgrow="ALWAYS" />
-            <Button id="button" fx:id="sendButton" mnemonicParsing="false" text="Send" />
-            <Button id="sendButton" fx:id="sendButton" mnemonicParsing="false" onAction="#onClearClicked" text="Clear" />
+            <Button id="button" fx:id="sendbutton" mnemonicParsing="false" text="Send" />
+            <Button id="button" fx:id="sendButton" mnemonicParsing="false" onAction="#onClearClicked" text="Clear" />
          </children>
       </HBox>
    </children>
