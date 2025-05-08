@@ -149,7 +149,7 @@ public class LoginManager {
             {
                 try
                 {
-                    OrganizerManager.addOrganizer(username, password, dob);
+                    OrganizerManager.addOrganizer(username, password, dob, address, gender);
                     // show dashboard
                     OrganizerManager.addOrganizer(username, password, dob, address, gender);
                 }

@@ -140,12 +140,6 @@ public class DashboardManager {
                 new SimpleStringProperty(cellData.getValue().getGender().toString()));
         attendeeTable.setItems(attendees);
 
-//        viewProfileButton.setPickOnBounds(true);
-//        viewProfileButton.setOnMouseClicked(e -> {
-//            toggleProfile();
-//        });
-
-
 
 
         eventTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -187,6 +181,9 @@ public class DashboardManager {
             {
                 allRoomsZoomOut.play();
                 cancelAllRoomsLoading();
+            }
+            else if (isProfileVisible.get()) {
+            myProfileFormZoomOut.play();
             }
         }
     }
@@ -436,6 +433,18 @@ public class DashboardManager {
                 allRoomsZoomOut.play();
                 cancelAllRoomsLoading();
             }
+            else if(isAllEventsVisible.get())
+            {
+                cancelAllEventsLoading();
+                allEventsZoomOut.play();
+            }else if(isAllRoomsVisible.get())
+            {
+                allRoomsZoomOut.play();
+                cancelAllRoomsLoading();
+            }
+            else if (isProfileVisible.get()) {
+                myProfileFormZoomOut.play();
+            }
         }
     }
 
@@ -480,30 +489,32 @@ public class DashboardManager {
     @FXML
     private void toggleAllRooms()
     {
-        if(!isAllRoomsVisible.get())
-        {
+        if(!isAllRoomsVisible.get()) {
             allRoomsTable.setVisible(true);
             allRoomsZoomIn.play();
             loadAllRooms();
-            if (isEventVisible.get())
-                eventZoomOut.play();
-            else if(isRoomVisible.get())
-                roomZoomOut.play();
-            else if(isCategoryVisible.get())
-                categoryZoomOut.play();
-            else if(isAllAttendeesFormVisible.get()) {
-                allAttendeesFormZoomOut.play();
-                cancelAllAttendeesLoading();
-            }else if(isAllEventsVisible.get())
-            {
-                allEventsZoomOut.play();
-                cancelAllEventsLoading();
-            }
-        }else
-        {
-            allRoomsZoomOut.play();
-            cancelAllRoomsLoading();
         }
+        else{
+                if (isEventVisible.get())
+                    eventZoomOut.play();
+                else if (isRoomVisible.get())
+                    roomZoomOut.play();
+                else if (isCategoryVisible.get())
+                    categoryZoomOut.play();
+                else if (isAllAttendeesFormVisible.get()) {
+                    allAttendeesFormZoomOut.play();
+                    cancelAllAttendeesLoading();
+                } else if (isAllEventsVisible.get()) {
+                    allEventsZoomOut.play();
+                    cancelAllEventsLoading();
+                } else if (isAllRoomsVisible.get()) {
+                    allRoomsZoomOut.play();
+                    cancelAllRoomsLoading();
+                } else if (isProfileVisible.get()) {
+                    myProfileFormZoomOut.play();
+                }
+        }
+
     }
 
     @FXML
@@ -527,10 +538,22 @@ public class DashboardManager {
             }
             else if(isAllAttendeesFormVisible.get()){
                 allAttendeesFormZoomOut.play();
+                cancelAllAttendeesLoading();
             }
             else if(isRoomVisible.get()){
                 roomZoomOut.play();
             }
+           else if(isAllEventsVisible.get())
+            {
+            allEventsZoomOut.play();
+            cancelAllEventsLoading();
+            }
+            else
+           {
+             allRoomsZoomOut.play();
+             cancelAllRoomsLoading();
+           }
+
         }
     }
 

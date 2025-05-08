@@ -279,7 +279,7 @@ public class Organizer extends User {
             }
         }
 
-        showDashboard();
+
     }
 
     // Helper methods for each operation

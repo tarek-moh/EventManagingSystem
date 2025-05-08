@@ -174,17 +174,6 @@ public class Attendee extends User
     }
 
 
-    public void setGender(int select) 
-    {    
-                if (select == 1) 
-                {
-                    this.gender = Gender.MALE;
-                } 
-                else if (select == 2) 
-                {
-                    this.gender = Gender.FEMALE;
-                }
-    }
 
     public ArrayList<myCategory> getInterests() {
         return interestList;

@@ -4,21 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="Refactored">
-    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="Finish button funcs">
+    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/LoginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/LoginManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/OrganizerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/OrganizerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/ProfileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/ProfileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Admin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Attendee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Attendee.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/RoomManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,12 +51,6 @@
     &quot;assignee&quot;: &quot;tarek-moh&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/tarek-moh/EventManagingSystem.git",
-    "accountId": "2296a75a-1f0e-4b40-af68-8186a30bb814"
-  }
-}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/tarek-moh/EventManagingSystem&quot;,
@@ -87,25 +74,6 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Backend&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/omaro/IdeaProjects/EventManagingSystem/src/main/java/org/example/eventmanagingsystem/services&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,

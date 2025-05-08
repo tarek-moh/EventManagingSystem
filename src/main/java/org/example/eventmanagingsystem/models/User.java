@@ -45,6 +45,13 @@ public abstract class User
         String formatted = dateOfBirth.format(formatter);  // "31 December 2000"
         return formatted;
     }
+    public void setGender(Gender gender)
+    {
+        this.gender= gender;
+    }
+    public void setAddress(String address){
+        this.address = address;
+    }
 
     public void setUserName(String newUserName) throws IllegalArgumentException {
         if (newUserName == null || newUserName.trim().isEmpty()) {
