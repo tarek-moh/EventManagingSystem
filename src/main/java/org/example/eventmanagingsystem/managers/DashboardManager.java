@@ -12,12 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -25,7 +22,6 @@ import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.models.Attendee;
 import org.example.eventmanagingsystem.models.User;
 import org.example.eventmanagingsystem.services.Database;
-import org.example.eventmanagingsystem.models.Attendee;
 
 import java.util.ArrayList;
 
@@ -42,9 +38,8 @@ public class DashboardManager {
     @FXML private TextField eventTitleField;
     @FXML private TextArea eventDescriptionField;
     @FXML private ComboBox<String> eventCategoryField;
-    @FXML private TextField eventTimeSlotField;
-    @FXML private TextField eventPriceField;
     @FXML private Button eventCreateButton;
+    @FXML private TextField ticketPriceField;
     // Controller code
     private final ParallelTransition eventZoomIn = new ParallelTransition();
     private final ParallelTransition eventZoomOut = new ParallelTransition();
@@ -249,11 +244,15 @@ public class DashboardManager {
         String title = eventTitleField.getText();
         String descrip = eventDescriptionField.getText();
         String categori = eventCategoryField.getValue();
-        String tickprice = eventPriceField.getText();
-        // timelot = eventTimeSlotField.getText();
+        String tickprice = ticketPriceField.getText();
+        int startHour = Integer.parseInt(eventStartField.getValue().toString());
+        int endHour = Integer.parseInt(eventEndField.getValue().toString());
+
+        String timeslot = String.format("%02d:00-%02d:00", startHour, endHour);
         try {
             double price = Double.parseDouble(tickprice);
-            EventManager.addEvent(title, descrip, categori, price);
+            EventManager.addEvent(title, descrip, categori, timeslot, price);
+            showAlert(Alert.AlertType.INFORMATION, "Event created", "Event Created successfully");
         }
         catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for price.");
