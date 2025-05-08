@@ -16,12 +16,13 @@ public class Admin extends User {
     }
 
     // Parameterised Constructor
-    public Admin(String userName, String password, LocalDate dateOfBirth, String adminRole, String workingHours) {
-        super(userName, password, dateOfBirth);
+    public Admin(String userName, String password, LocalDate dateOfBirth, String adminRole, String workingHours,String address,Gender gender) {
+        super(userName, password, dateOfBirth, address,gender);
         this.adminRole = adminRole;
         this.workingHours = workingHours;
         this.ID = 30000 + adminCount++;
     }
+
 
     // Helper methods for each operation
     private void changeUsername() {
@@ -47,7 +48,7 @@ public class Admin extends User {
         int year = getValidInt("Enter year of birth (e.g., 2000): ", 1, 2024);
         int month = getValidInt("Enter month of birth (1-12): ", 1, 12);
         int day = getValidInt("Enter day of birth (1-31): ", 1, 31);
-        setDateOfBirth(year, month, day);
+        setDateOfBirth(LocalDate.of(year, month, day));
     }
 
     private void changeRole() {

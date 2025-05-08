@@ -13,26 +13,24 @@ public class Attendee extends User
     Scanner input = new Scanner(System.in);
 
     private static int attendeeCount = 0;
-    private String address;
-    private Gender gender;
     private Wallet wallet;
     private ArrayList<myCategory> interestList;
     private ArrayList<Ticket> ticketList;
+
 
     public Attendee() {    super();     } // no-arg-constructor
 
     // parameterized constructor
     public Attendee(String userName, String password, LocalDate dateOfBirth, String address, Gender gender) 
     {
-        super(userName, password, dateOfBirth);
+        super(userName, password, dateOfBirth, address, gender);
         this.ID = 10000 + attendeeCount;
-        this.address = address;
-        this.gender = gender;
          this.wallet = new Wallet();
          this.ticketList = new ArrayList<Ticket>();
          this.interestList = new ArrayList<myCategory>();
         attendeeCount++;
     }
+
 
     // Helper methods
 
@@ -66,6 +64,7 @@ public class Attendee extends User
             updateWallet(amount, walletChoice);
         }
     }
+
 
     // helper methods
     private void changeUsername() {
@@ -163,25 +162,11 @@ public class Attendee extends User
         else if (choice == 2) {    wallet.deductFunds(amount);    }
     }
 
-    public String getAddress() {     return this.address;      }
-
     public ArrayList<Ticket> getMyTickets() {
         return ticketList;
     }
 
-    public Gender getGender() {   return this.gender;   }
 
-    public void setGender(int select) 
-    {    
-                if (select == 1) 
-                {
-                    this.gender = Gender.MALE;
-                } 
-                else if (select == 2) 
-                {
-                    this.gender = Gender.FEMALE;
-                }
-    }
 
     public ArrayList<myCategory> getInterests() {
         return interestList;

@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.eventmanagingsystem.managers.LoginManager;
-import org.example.eventmanagingsystem.managers.ProfileManager;
+
 
 import java.io.IOException;
 

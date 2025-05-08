@@ -26,6 +26,11 @@ public class Room {
 	// must match one of the ranges in available hours string.
 	private ArrayList<String> bookedSlots;
 
+	public Room(){
+		this.roomID = ++roomCount;
+		this.bookedSlots = new ArrayList<String>();
+	}
+
 	public Room(String availableHours, int capacity) {
 		if (capacity <= 0) {
 			throw new IllegalArgumentException("Room capacity must be a positive number.");
@@ -53,6 +58,14 @@ public class Room {
 
 	public String getScheduleSlots() {
 		return slots;
+	}
+
+	public void setCapacity(int capacity) throws IllegalArgumentException {
+		if (capacity<=0)
+		{
+			throw new IllegalArgumentException("Capacity must be a positive number");
+		}
+		this.capacity = capacity;
 	}
 
 	public int getCapacity() {

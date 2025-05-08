@@ -1,6 +1,9 @@
 package org.example.eventmanagingsystem.models;
 
+import org.example.eventmanagingsystem.services.Database;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public abstract class User 
@@ -12,22 +15,43 @@ public abstract class User
     protected String userName;
     protected String password;
     protected LocalDate dateOfBirth;
+    protected String address;
+    protected Gender gender;
 
     // No-arg constructor
     public User() { }
 
     // Parameterised Constructor 
-    public User(String userName, String password, LocalDate dateOfBirth) {
+    public User(String userName, String password, LocalDate dateOfBirth,String address,Gender gender) {
         this.ID = ++userCount; // Increment the total users when a new one is created, Assign the user an ID
         this.userName = userName;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
+        this.address =address;
+        this.gender = gender;
     }
+
 
     // Getters and Setters 
     public int getId() {    return ID;    }
 
     public String getUserName() {    return this.userName;     }
+    public Gender getGender() {return gender;}
+    public String getAddress() {return address;}
+    public LocalDate getDateOfBirth() {return this.dateOfBirth;}
+
+    public String getDateOfBirthAsString(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        String formatted = dateOfBirth.format(formatter);  // "31 December 2000"
+        return formatted;
+    }
+    public void setGender(Gender gender)
+    {
+        this.gender= gender;
+    }
+    public void setAddress(String address){
+        this.address = address;
+    }
 
     public void setUserName(String newUserName) throws IllegalArgumentException {
         if (newUserName == null || newUserName.trim().isEmpty()) {
@@ -42,6 +66,24 @@ public abstract class User
         {
             throw new IllegalArgumentException("Username can only contain letters, digits, and underscores.");
         }
+        for(Attendee attendee : Database.getAttendeeList())
+        {
+            if(attendee.getUserName().equals(newUserName))
+            {  throw new IllegalArgumentException("Username is already taken");  }
+        }
+
+        for(Organizer organizer : Database.getOrganizerList())
+        {
+            if(organizer.getUserName().equals(newUserName))
+            {  throw new IllegalArgumentException("Username is already taken");  }
+        }
+
+        for(Admin admin : Database.getAdminList())
+        {
+            if(admin.getUserName().equals(newUserName))
+            {  throw new IllegalArgumentException("Username is already taken");  }
+        }
+
         this.userName = newUserName;
     }
 
@@ -75,11 +117,18 @@ public abstract class User
         this.password = newPassword;
     }
 
-    public LocalDate getDateOfBirth() {   return this.dateOfBirth;    }
 
-    public void setDateOfBirth(int year, int month, int day) 
+
+    public void setDateOfBirth(LocalDate dateOfBirth) throws IllegalArgumentException
     {
-        this.dateOfBirth = LocalDate.of(year, month, day);
+        if (dateOfBirth == null) {
+            throw new IllegalArgumentException("Date of birth cannot be empty.");
+        }
+
+        if (dateOfBirth.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Date of birth cannot be in the future.");
+        }
+        this.dateOfBirth = dateOfBirth;
     }
 
     public static int getUserCount() {    return userCount;    }

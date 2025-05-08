@@ -12,11 +12,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.eventmanagingsystem.models.*;
+import org.example.eventmanagingsystem.models.Attendee;
+import org.example.eventmanagingsystem.models.User;
 import org.example.eventmanagingsystem.services.Database;
 import org.example.eventmanagingsystem.models.Attendee;
 
@@ -24,6 +31,8 @@ import java.util.ArrayList;
 
 
 public class DashboardManager {
+    /// ***********User logged in reference*********///
+    private User user;
 
     private static final ObservableList<String> HOURS =
             FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
@@ -72,6 +81,21 @@ public class DashboardManager {
     @FXML private TableColumn<Attendee, String> genderColumn;
     @FXML private TableColumn<Attendee, String> addressColumn;
 
+    //*******************Profile View***************************//
+    @FXML private ImageView viewProfileButton;
+    @FXML private VBox profileForm;
+    @FXML private Text usernameField;
+    @FXML private Text IdField;
+    @FXML private Text genderField;
+    @FXML private Text dofbField;
+    @FXML private Text addressField;
+    private final BooleanProperty isProfileVisible = new SimpleBooleanProperty(false);
+    private final ParallelTransition myProfileFormZoomIn = new ParallelTransition();
+    private final ParallelTransition myProfileFormZoomOut = new ParallelTransition();
+
+
+
+
     //******************* Events Table *******************//
     @FXML private VBox allEventsTable;
     @FXML private TableView<Event> eventsTable;
@@ -106,11 +130,13 @@ public class DashboardManager {
 
     @FXML
     public void initialize() {
-        // Set up transitions for panes
+        // Set up transitions for all forms
         setupZoomTransition(eventForm, eventZoomIn, eventZoomOut, isEventVisible);
         setupZoomTransition(roomForm, roomZoomIn, roomZoomOut, isRoomVisible);
         setupZoomTransition(categoryForm, categoryZoomIn, categoryZoomOut, isCategoryVisible);
         setupZoomTransition(allAttendeesForm, allAttendeesFormZoomIn, allAttendeesFormZoomOut, isAllAttendeesFormVisible);
+        setupZoomTransition(profileForm, myProfileFormZoomIn, myProfileFormZoomOut, isProfileVisible);
+
         setupZoomTransition(allEventsTable, allEventsZoomIn, allEventsZoomOut, isAllEventsVisible);
         setupZoomTransition(allRoomsTable, allRoomsZoomIn, allRoomsZoomOut, isAllRoomsVisible);
 
@@ -150,6 +176,8 @@ public class DashboardManager {
         roomCapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         roomsTable.setItems(rooms);
 
+        //registerButton.setOnAction(event->handleRegister());
+        eventCreateButton.setOnAction(event->handleCreateEvent());
         // TODO: need to call the butTicket(Event) from the specific Attendee user
         buyTicketColumn.setCellFactory(param -> new TableCell<>(){
             private final Button buyButton = new Button("Buy Ticket");
@@ -184,6 +212,7 @@ public class DashboardManager {
 //                        currentUser.getWallet().balanceProperty()
 //                );
     }
+
     @FXML
     private void toggleEventForm() {
         if (isEventVisible.get()) {
@@ -210,10 +239,29 @@ public class DashboardManager {
                 allRoomsZoomOut.play();
                 cancelAllRoomsLoading();
             }
+            else if (isProfileVisible.get()) {
+            myProfileFormZoomOut.play();
+            }
         }
     }
     @FXML private void handleCreateEvent()
-    {}
+    {
+        String title = eventTitleField.getText();
+        String descrip = eventDescriptionField.getText();
+        String categori = eventCategoryField.getValue();
+        String tickprice = eventPriceField.getText();
+        // timelot = eventTimeSlotField.getText();
+        try {
+            double price = Double.parseDouble(tickprice);
+            EventManager.addEvent(title, descrip, categori, price);
+        }
+        catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for price.");
+        }
+        catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
+    }
 
     @FXML
     private void toggleRoomForm() {
@@ -232,6 +280,9 @@ public class DashboardManager {
                 allAttendeesFormZoomOut.play();
                 cancelAllAttendeesLoading();
             }
+            else if(isProfileVisible.get()){
+                myProfileFormZoomOut.play();
+            }
             else if(isAllEventsVisible.get())
             {
                 cancelAllEventsLoading();
@@ -247,6 +298,23 @@ public class DashboardManager {
     @FXML
     private void handleCreateRoom()
     {
+        String roomCap = roomCapacityField.getText();
+        // String timelot = roomstart and end get()
+
+        try
+        {
+            if (roomCap == null || roomCap.isEmpty())
+                throw new IllegalArgumentException("Capacity cannot be left empty");
+            int cap = Integer.parseInt(roomCap);
+            RoomManager.addRoom(cap);
+        }
+        catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for capacity.");
+        }
+        catch(IllegalArgumentException ex)
+        {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
 
     }
 
@@ -269,6 +337,9 @@ public class DashboardManager {
                 allAttendeesFormZoomOut.play();
                 cancelAllAttendeesLoading();
             }
+            else if(isProfileVisible.get()){
+                myProfileFormZoomOut.play();
+            }
             else if(isAllEventsVisible.get())
             {
                 cancelAllEventsLoading();
@@ -283,7 +354,16 @@ public class DashboardManager {
 
     @FXML
     private void handleCreateCategory()
-    {}
+    {
+        String catName = categoryNameField.getText();
+        try{
+            CategoryManager.createCategory(catName);
+        }
+        catch (IllegalArgumentException ex)
+        {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
+    }
 
     @FXML
     private void toggleAllAttendeesForm()
@@ -304,6 +384,9 @@ public class DashboardManager {
                 roomZoomOut.play();
             else if(isCategoryVisible.get())
                 categoryZoomOut.play();
+            else if(isProfileVisible.get()){
+                myProfileFormZoomOut.play();
+            }
             else if(isAllEventsVisible.get())
             {
                 cancelAllEventsLoading();
@@ -314,6 +397,7 @@ public class DashboardManager {
                 cancelAllRoomsLoading();
             }
         }
+
     }
 
 
@@ -406,6 +490,18 @@ public class DashboardManager {
                 allRoomsZoomOut.play();
                 cancelAllRoomsLoading();
             }
+            else if(isAllEventsVisible.get())
+            {
+                cancelAllEventsLoading();
+                allEventsZoomOut.play();
+            }else if(isAllRoomsVisible.get())
+            {
+                allRoomsZoomOut.play();
+                cancelAllRoomsLoading();
+            }
+            else if (isProfileVisible.get()) {
+                myProfileFormZoomOut.play();
+            }
         }
     }
 
@@ -450,40 +546,98 @@ public class DashboardManager {
     @FXML
     private void toggleAllRooms()
     {
-        if(!isAllRoomsVisible.get())
-        {
+        if(!isAllRoomsVisible.get()) {
             allRoomsTable.setVisible(true);
             allRoomsZoomIn.play();
             loadAllRooms();
-            if (isEventVisible.get())
-                eventZoomOut.play();
-            else if(isRoomVisible.get())
-                roomZoomOut.play();
-            else if(isCategoryVisible.get())
-                categoryZoomOut.play();
-            else if(isAllAttendeesFormVisible.get()) {
-                allAttendeesFormZoomOut.play();
-                cancelAllAttendeesLoading();
-            }else if(isAllEventsVisible.get())
-            {
-                allEventsZoomOut.play();
-                cancelAllEventsLoading();
-            }
-        }else
-        {
-            allRoomsZoomOut.play();
-            cancelAllRoomsLoading();
         }
+        else{
+                if (isEventVisible.get())
+                    eventZoomOut.play();
+                else if (isRoomVisible.get())
+                    roomZoomOut.play();
+                else if (isCategoryVisible.get())
+                    categoryZoomOut.play();
+                else if (isAllAttendeesFormVisible.get()) {
+                    allAttendeesFormZoomOut.play();
+                    cancelAllAttendeesLoading();
+                } else if (isAllEventsVisible.get()) {
+                    allEventsZoomOut.play();
+                    cancelAllEventsLoading();
+                } else if (isAllRoomsVisible.get()) {
+                    allRoomsZoomOut.play();
+                    cancelAllRoomsLoading();
+                } else if (isProfileVisible.get()) {
+                    myProfileFormZoomOut.play();
+                }
+        }
+
     }
 
     @FXML
-    private void toggleProfile()
-    {}
+    private void toggleProfile() {
+        if(isProfileVisible.get()){
+            myProfileFormZoomOut.play();
+            System.out.println("profile toggle workkksss!!!");
+        }
+        else{
+            profileForm.setVisible(true);
+            myProfileFormZoomIn.play();
+            loadProfileInfo(user);     // <--------- load profile info
+
+            System.out.println("profile toggle shouldnt workkk!!!");
+            //hide all other forms
+            if(isEventVisible.get()){
+                eventZoomOut.play();
+            }
+            else if(isCategoryVisible.get()){
+               categoryZoomOut.play();
+            }
+            else if(isAllAttendeesFormVisible.get()){
+                allAttendeesFormZoomOut.play();
+                cancelAllAttendeesLoading();
+            }
+            else if(isRoomVisible.get()){
+                roomZoomOut.play();
+            }
+           else if(isAllEventsVisible.get())
+            {
+            allEventsZoomOut.play();
+            cancelAllEventsLoading();
+            }
+            else
+           {
+             allRoomsZoomOut.play();
+             cancelAllRoomsLoading();
+           }
+
+        }
+    }
+
+
+    private void loadProfileInfo(User user){
+        usernameField.setText(user.getUserName());
+        IdField.setText(String.valueOf(user.getId()));
+        genderField.setText(user.getGender().toString());
+        dofbField.setText(user.getDateOfBirthAsString());
+        addressField.setText(user.getAddress());
+    }
 
     @FXML
     private void logout()
     {
 
+    }
+    public void assignUserReference(User user){ this.user = user;}
+
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.setResizable(true);
+        alert.showAndWait();
     }
 
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {

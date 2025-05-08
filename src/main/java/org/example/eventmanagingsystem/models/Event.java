@@ -39,11 +39,17 @@ public class Event implements Comparable<Event> {
     private String title;
     private String description;
     private Organizer organizer;
-    private final String category;
+    private String category;
     private String timeslot;
     private Room room;
     private ArrayList <Ticket> soldTickets;
     private ArrayList<Attendee> attendees;
+
+    public Event(){
+        this.eventID =generateEventID();//patterned id ex: EVT202504201000
+        soldTickets=new ArrayList<>();
+        attendees=new ArrayList<>();
+    }
 
     //constructor
     public Event(String title, String description, Organizer organizer, String category, String timeslot, double ticketPrice){
@@ -152,12 +158,28 @@ public class Event implements Comparable<Event> {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty");
         }
+        if (title.length() < 3 || title.length() > 20)
+        {  throw new IllegalArgumentException("Title must be between 3 and 20 characters.");  }
+
+        for(Event e : Database.getEventList())
+        {
+            if(e.getTitle().equals(this.title))
+            {  throw new IllegalArgumentException("Title is already taken");  }
+        }
+
         this.title = title.trim();
     }
 
     public void setDescription(String description) {
-        this.description = (description != null) ? description.trim() : null;
+        if (description == null || description.trim().isEmpty())
+        {  throw new IllegalArgumentException("Description cannot be null or empty");  }
+
+        if (description.length() < 10 )
+        {  throw new IllegalArgumentException("Description must be at least 10 characters");  }
+
+        this.description = description;
     }
+
 
     public void setTimeslot(String timeslot) {
         if (timeslot == null || !timeslot.matches("^\\d{2}:\\d{2}-\\d{2}:\\d{2}$")) {
@@ -171,6 +193,13 @@ public class Event implements Comparable<Event> {
             throw new IllegalArgumentException("Price cannot be negative");
         }
         this.ticketPrice = price;
+    }
+
+    public void setCategory(String category1) throws IllegalArgumentException
+    {
+        if (category1 == null)
+            throw new IllegalArgumentException("You must choose a category");
+        this.category = category1;
     }
 
     public void setRoom(Room room) {
