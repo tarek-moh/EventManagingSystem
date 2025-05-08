@@ -31,15 +31,7 @@ public class Attendee extends User
         attendeeCount++;
     }
 
-
     // Helper methods
-    private void displayMainMenu() {
-        System.out.println("========================================");
-        System.out.println("Dashboard");
-        System.out.println("========================================");
-        System.out.println("1: View Events\n2: View my tickets \n3: Buy ticket\n4: My wallet");
-        System.out.println("5: Check Profile\n6: Manage Interests\n7: Logout");
-    }
 
     private short getValidChoice(int min, int max) {
         while (true) {
@@ -71,7 +63,6 @@ public class Attendee extends User
             updateWallet(amount, walletChoice);
         }
     }
-
 
     // helper methods
     private void changeUsername() {
@@ -184,15 +175,6 @@ public class Attendee extends User
     }
 
     public static int getAttendeeCount() {    return attendeeCount;    }
-
-    public void showAttendeeDetails()
-    {
-        System.out.println("Attendee ID: " + this.ID);
-        System.out.println("Attendee Username: " + this.userName);
-        System.out.println("Gender: " + this.gender);
-        System.out.println("Address: " + this.address);
-    }
-
 
     private void manageInterests() {
         // Get all available categories

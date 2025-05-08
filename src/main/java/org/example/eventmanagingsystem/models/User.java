@@ -31,7 +31,6 @@ public abstract class User
         this.gender = gender;
     }
 
-
     // Getters and Setters 
     public int getId() {    return ID;    }
 
@@ -117,7 +116,7 @@ public abstract class User
         this.password = newPassword;
     }
 
-
+    public LocalDate getDateOfBirth() {   return this.dateOfBirth;    }
 
     public void setDateOfBirth(LocalDate dateOfBirth) throws IllegalArgumentException
     {

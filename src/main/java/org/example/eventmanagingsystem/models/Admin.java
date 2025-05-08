@@ -1,16 +1,9 @@
 package org.example.eventmanagingsystem.models;
 
-import org.example.eventmanagingsystem.managers.RoomManager;
 import org.example.eventmanagingsystem.services.Database;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import static org.example.eventmanagingsystem.managers.AttendeeManager.showAllAttendees;
-import static org.example.eventmanagingsystem.managers.EventManager.showAllEvents;
-import static org.example.eventmanagingsystem.managers.RoomManager.showAllRooms;
-
 
 public class Admin extends User {
     private static int adminCount = 0;
@@ -18,7 +11,9 @@ public class Admin extends User {
     private String workingHours;
 
     // No-arg constructor
-    public Admin() {    super();    }
+    public Admin() {
+        super();
+    }
 
     // Parameterised Constructor
     public Admin(String userName, String password, LocalDate dateOfBirth, String adminRole, String workingHours,String address,Gender gender) {
@@ -99,24 +94,27 @@ public class Admin extends User {
     }
 
     // Getters and Setters
-    public String getAdminRole() {    return adminRole;    }
+    public String getAdminRole() {
+        return adminRole;
+    }
 
-    public void setAdminRole(String newAdminRole)
-    {
+    public void setAdminRole(String newAdminRole) {
         this.adminRole = newAdminRole;
     }
 
-    public String getWorkingHours() {    return workingHours;    }
+    public String getWorkingHours() {
+        return workingHours;
+    }
 
-    public void setWorkingHours(String newWorkingHours)
-    {
+    public void setWorkingHours(String newWorkingHours) {
         this.workingHours = newWorkingHours;
     }
 
-    public void createCategory (myCategory newCategory) {  Database.getCategoryList().add(newCategory);    }
+    public void createCategory(myCategory newCategory) {
+        Database.getCategoryList().add(newCategory);
+    }
 
-    public myCategory readCategory (String name)
-    {
+    public myCategory readCategory(String name) {
         for (myCategory category : Database.getCategoryList()) {
             if (category.getName().equals(name)) {
                 return category;
@@ -125,8 +123,7 @@ public class Admin extends User {
         return null;
     }
 
-    public boolean deleteCategory(String name)
-    {
+    public boolean deleteCategory(String name) {
         if (readCategory(name) != null) {
             Database.getCategoryList().remove(readCategory(name));
             return true;
@@ -134,26 +131,23 @@ public class Admin extends User {
         return false;
     }
 
-    public void createRoom (Room newRoom) {   Database.getRoomList().add(newRoom);    }
+    public void createRoom(Room newRoom) {
+        Database.getRoomList().add(newRoom);
+    }
 
-    public Room readRoom (int roomId)
-    {
-        for (Room room : Database.getRoomList())
-        {
-        if (room.getRoomID() == roomId)
-        {
-            return room;
-        }
+    public Room readRoom(int roomId) {
+        for (Room room : Database.getRoomList()) {
+            if (room.getRoomID() == roomId) {
+                return room;
+            }
         }
         return null;
     }
 
-    public boolean deleteRoom(int Id)
-    {
+    public boolean deleteRoom(int Id) {
         ArrayList<Room> rooms = Database.getRoomList();
-        for(int i =0; i<rooms.size();i++)
-        {
-            if(rooms.get(i).getRoomID() == Id) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getRoomID() == Id) {
                 Database.getRoomList().remove(i);
                 return true;
             }

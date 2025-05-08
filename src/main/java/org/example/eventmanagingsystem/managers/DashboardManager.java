@@ -25,6 +25,7 @@ import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.models.Attendee;
 import org.example.eventmanagingsystem.models.User;
 import org.example.eventmanagingsystem.services.Database;
+import org.example.eventmanagingsystem.models.Attendee;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,9 @@ import java.util.ArrayList;
 public class DashboardManager {
     /// ***********User logged in reference*********///
     private User user;
+
+    private static final ObservableList<String> HOURS =
+            FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
 
     //******************* Event Form *******************//
     @FXML private VBox eventForm;
@@ -116,6 +120,12 @@ public class DashboardManager {
     private final BooleanProperty isAllRoomsVisible = new SimpleBooleanProperty(false);
     @FXML private TableColumn<Room, String> roomIdColumn;
     @FXML private TableColumn<Room, String> roomCapacityColumn;
+    @FXML private ComboBox<String> eventStartField;
+    @FXML private ComboBox<String> eventEndField;
+
+
+    //******************* Balance  *******************//
+    @FXML private Label balanceLabel;
 
 
     @FXML
@@ -129,9 +139,22 @@ public class DashboardManager {
 
         setupZoomTransition(allEventsTable, allEventsZoomIn, allEventsZoomOut, isAllEventsVisible);
         setupZoomTransition(allRoomsTable, allRoomsZoomIn, allRoomsZoomOut, isAllRoomsVisible);
-        // Additional form-specific setup
-        eventCategoryField.getItems().addAll("Concert", "Conference", "Workshop", "Exhibition");
 
+        // populate combo boxes
+        eventStartField.setItems(HOURS);
+        eventEndField.setItems(HOURS);
+        roomStartField.setItems(HOURS);
+        roomEndField.setItems(HOURS);
+
+
+        // Additional form-specific setup
+        ArrayList<myCategory> categories = Database.getCategoryList();
+        ArrayList<String> catNames = new ArrayList<>();
+        for(myCategory cat : categories)
+            catNames.add(cat.getName());
+        eventCategoryField.getItems().addAll(catNames);
+
+        attendees.addAll(Database.getAttendeeList());
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -142,20 +165,57 @@ public class DashboardManager {
 
 
 
+
+        events.addAll(Database.getEventList());
         eventTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         ticketPriceColumn.setCellValueFactory(new PropertyValueFactory<>("ticketPrice"));
         eventTimeColumn.setCellValueFactory(new PropertyValueFactory<>("timeslot"));
         eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         eventsTable.setItems(events);
 
+        rooms.addAll(Database.getRoomList());
         roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
         roomCapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         roomsTable.setItems(rooms);
+
+        // TODO: need to call the butTicket(Event) from the specific Attendee user
+        buyTicketColumn.setCellFactory(param -> new TableCell<>(){
+            private final Button buyButton = new Button("Buy Ticket");
+
+            {
+                buyButton.setOnAction(event -> {
+//                    Event eventObj = getTableView().getItems().get(getIndex());
+//                    if((Attendee)currentUser.buyTicket(eventObj))
+//                    {
+//                        showAlert("")
+//                    }
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(buyButton);
+                }
+            }
+        });
 
         //registerButton.setOnAction(event->handleRegister());
         eventCreateButton.setOnAction(event->handleCreateEvent());
     }
 
+        // TODO: needs current user from session inorder to call their respective getBalance
+//        balanceLabel.textProperty().bind(
+//                Bindings.createStringBinding(() -> {
+//                            double bal = currentUser.getWallet().getBalance();
+//                            String color = bal < 0 ? "red" : bal < 50 ? "orange" : "green";
+//                            return String.format("-fx-text-fill: %s; Balance: $%.2f", color, bal);
+//                        },
+//                        currentUser.getWallet().balanceProperty()
+//                );
+   // }
     @FXML
     private void toggleEventForm() {
         if (isEventVisible.get()) {
@@ -576,6 +636,11 @@ public class DashboardManager {
         alert.setContentText(message);
         alert.setResizable(true);
         alert.showAndWait();
+    }
+    @FXML
+    private void logout()
+    {
+
     }
 
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {
