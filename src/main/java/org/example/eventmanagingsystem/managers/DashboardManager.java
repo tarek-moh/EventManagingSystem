@@ -25,6 +25,9 @@ import java.util.ArrayList;
 
 public class DashboardManager {
 
+    private static final ObservableList<String> HOURS =
+            FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+
     //******************* Event Form *******************//
     @FXML private VBox eventForm;
     @FXML private TextField eventTitleField;
@@ -93,6 +96,9 @@ public class DashboardManager {
     private final BooleanProperty isAllRoomsVisible = new SimpleBooleanProperty(false);
     @FXML private TableColumn<Room, String> roomIdColumn;
     @FXML private TableColumn<Room, String> roomCapacityColumn;
+    @FXML private ComboBox<String> eventStartField;
+    @FXML private ComboBox<String> eventEndField;
+
 
     //******************* Balance  *******************//
     @FXML private Label balanceLabel;
@@ -107,6 +113,14 @@ public class DashboardManager {
         setupZoomTransition(allAttendeesForm, allAttendeesFormZoomIn, allAttendeesFormZoomOut, isAllAttendeesFormVisible);
         setupZoomTransition(allEventsTable, allEventsZoomIn, allEventsZoomOut, isAllEventsVisible);
         setupZoomTransition(allRoomsTable, allRoomsZoomIn, allRoomsZoomOut, isAllRoomsVisible);
+
+        // populate combo boxes
+        eventStartField.setItems(HOURS);
+        eventEndField.setItems(HOURS);
+        roomStartField.setItems(HOURS);
+        roomEndField.setItems(HOURS);
+
+
         // Additional form-specific setup
         ArrayList<myCategory> categories = Database.getCategoryList();
         ArrayList<String> catNames = new ArrayList<>();
