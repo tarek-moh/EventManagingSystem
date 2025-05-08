@@ -138,25 +138,24 @@ public class LoginManager {
                 try
                 {
                     AttendeeManager.addAttendee(username, password, address, dob,gender);
+                    //show dashboard
                 }
-                catch (AttendeeManager.InvalidInputException ex)
+                catch (IllegalArgumentException ex)
                 {
-                    showAlert(AlertType.ERROR, "Invalid Input", ex.getMessage());
-                }
-                catch(AttendeeManager.UserAlreadyExistsException ex)
-                {
-                    showAlert(AlertType.ERROR, "User already exists", ex.getMessage());
+                    showAlert(AlertType.ERROR, "", ex.getMessage());
                 }
             }
             else if(organizerRadio.isSelected())
             {
                 try
                 {
+                    OrganizerManager.addOrganizer(username, password, dob);
+                    // show dashboard
                     OrganizerManager.addOrganizer(username, password, dob, address, gender);
                 }
                 catch (IllegalArgumentException ex)
                 {
-                    showAlert(AlertType.ERROR, "Invalid Input", ex.getMessage());
+                    showAlert(AlertType.ERROR, "", ex.getMessage());
                 }
 
             }
@@ -190,7 +189,6 @@ public class LoginManager {
         });
     }
 
-
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -202,14 +200,7 @@ public class LoginManager {
 
     private boolean register(String username, String password, String confirmPassowrd)
     {
-        if(password.equals(confirmPassowrd))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return password.equals(confirmPassowrd);
     }
 
     private boolean login(String username, String password)

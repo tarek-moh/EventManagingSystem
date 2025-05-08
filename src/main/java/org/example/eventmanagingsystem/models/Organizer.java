@@ -246,6 +246,41 @@ public class Organizer extends User {
 //        return
 //    }
 
+    private void showProfile() {
+        boolean inProfile = true;
+
+        while (inProfile) {
+            System.out.println("========================================");
+            System.out.println("Profile");
+            System.out.println("========================================");
+            System.out.println("Username              1: Change Username\n" + getUserName());
+            System.out.println("Password              2: Change Password\n" + getPassword());
+            System.out.println("Date of birth         3: Change date of birth\n" + getDateOfBirth());
+            System.out.println("ID                    4: Exit Profile\n" + getId());
+
+            short profChoice = getValidMenuChoice(1, 6);
+
+            switch (profChoice) {
+                case 1:
+                    changeUsername();
+                    break;
+
+                case 2:
+                    changePassword();
+                    break;
+
+                case 3:
+                    changeDateOfBirth();
+                    break;
+
+                case 4:
+                    inProfile = false;
+                    break;
+            }
+        }
+
+        showDashboard();
+    }
 
     // Helper methods for each operation
     private void changeUsername() {
@@ -271,7 +306,7 @@ public class Organizer extends User {
         int year = getValidInt("Enter year of birth (e.g., 2000): ", 1, 2024);
         int month = getValidInt("Enter month of birth (1-12): ", 1, 12);
         int day = getValidInt("Enter day of birth (1-31): ", 1, 31);
-        setDateOfBirth(year, month, day);
+        setDateOfBirth(LocalDate.of(year, month, day));
     }
 
     // Utility methods

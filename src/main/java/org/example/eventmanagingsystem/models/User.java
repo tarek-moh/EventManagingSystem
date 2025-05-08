@@ -1,5 +1,7 @@
 package org.example.eventmanagingsystem.models;
 
+import org.example.eventmanagingsystem.services.Database;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -57,6 +59,24 @@ public abstract class User
         {
             throw new IllegalArgumentException("Username can only contain letters, digits, and underscores.");
         }
+        for(Attendee attendee : Database.getAttendeeList())
+        {
+            if(attendee.getUserName().equals(newUserName))
+            {  throw new IllegalArgumentException("Username is already taken");  }
+        }
+
+        for(Organizer organizer : Database.getOrganizerList())
+        {
+            if(organizer.getUserName().equals(newUserName))
+            {  throw new IllegalArgumentException("Username is already taken");  }
+        }
+
+        for(Admin admin : Database.getAdminList())
+        {
+            if(admin.getUserName().equals(newUserName))
+            {  throw new IllegalArgumentException("Username is already taken");  }
+        }
+
         this.userName = newUserName;
     }
 
@@ -92,9 +112,16 @@ public abstract class User
 
 
 
-    public void setDateOfBirth(int year, int month, int day) 
+    public void setDateOfBirth(LocalDate dateOfBirth) throws IllegalArgumentException
     {
-        this.dateOfBirth = LocalDate.of(year, month, day);
+        if (dateOfBirth == null) {
+            throw new IllegalArgumentException("Date of birth cannot be empty.");
+        }
+
+        if (dateOfBirth.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Date of birth cannot be in the future.");
+        }
+        this.dateOfBirth = dateOfBirth;
     }
 
     public static int getUserCount() {    return userCount;    }
