@@ -13,67 +13,15 @@ public class Organizer extends User {
     private static int organizerCount = 0;
     private Wallet wallet;
 
-    public static void main(String[] args)
-    {
-        Organizer org = new Organizer("Nour", "mysteryBooks", LocalDate.of(2001, 11, 3));
-        org.showDashboard();
-    }
-
     public Organizer() {    super();    }    // No-arg constructor
 
     // Constructor with parameters
-    public Organizer(String userName, String password, LocalDate dateOfBirth) {
-        super(userName, password, dateOfBirth);
+    public Organizer(String userName, String password, LocalDate dateOfBirth, String address, Gender gender) {
+        super(userName, password, dateOfBirth, address ,gender);
         this.ID = 20000 + organizerCount ;
         this.wallet = new Wallet();
     }
 
-    @Override
-    public void showDashboard() {
-        while (true) {
-            displayDashboardMenu();
-            short choice = getValidMenuChoice(1, 11);
-
-            switch (choice) {
-                case 1 -> RoomManager.showAvailableRooms();
-
-                case 2 -> showMyEvents();
-
-                case 3 -> showEventAttendeesInteractive();
-
-                case 4 -> removeEventAttendee();
-
-                case 5 -> createEvent();
-
-
-                case 6 ->  updateEventInteractive();
-
-                case 7 -> {
-                    while (true) {
-                        System.out.println("Enter The Event ID: ");
-                        try {
-                            String Id = input.nextLine();
-                            deleteEvent(Id);
-                            break;
-                        } catch (InputMismatchException e) {
-                            System.out.println("Event ID is a String");
-                        }
-                    }
-                }
-
-                case 8 -> manageWallet();
-
-                case 9 -> showProfile();
-
-                case 10 -> {
-                    return;
-                } // Exit dashboard
-
-                default->
-                    System.out.println("Invalid input! Please choose between 1 and 11:");
-            }
-        }
-    }
 
     // Helper methods
     private void displayDashboardMenu() {
@@ -298,41 +246,6 @@ public class Organizer extends User {
 //        return
 //    }
 
-    private void showProfile() {
-        boolean inProfile = true;
-
-        while (inProfile) {
-            System.out.println("========================================");
-            System.out.println("Profile");
-            System.out.println("========================================");
-            System.out.println("Username              1: Change Username\n" + getUserName());
-            System.out.println("Password              2: Change Password\n" + getPassword());
-            System.out.println("Date of birth         3: Change date of birth\n" + getDateOfBirth());
-            System.out.println("ID                    4: Exit Profile\n" + getId());
-
-            short profChoice = getValidMenuChoice(1, 6);
-
-            switch (profChoice) {
-                case 1:
-                    changeUsername();
-                    break;
-
-                case 2:
-                    changePassword();
-                    break;
-
-                case 3:
-                    changeDateOfBirth();
-                    break;
-
-                case 4:
-                    inProfile = false;
-                    break;
-            }
-        }
-
-        showDashboard();
-    }
 
     // Helper methods for each operation
     private void changeUsername() {

@@ -9,10 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.example.eventmanagingsystem.models.Admin;
-import org.example.eventmanagingsystem.models.Attendee;
-import org.example.eventmanagingsystem.models.Gender;
-import org.example.eventmanagingsystem.models.Organizer;
+import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.services.Database;
 
 import java.io.IOException;
@@ -26,6 +23,8 @@ public class LoginManager {
         this.primaryStage = stage;
     }
 
+    // user logged in ref
+    private User user;
 
     private final ToggleGroup group1 = new ToggleGroup(); // Create group
     private final ToggleGroup group2 = new ToggleGroup();
@@ -103,7 +102,12 @@ public class LoginManager {
         if (login(username, password)) {
             try
             {
-                dashboard = FXMLLoader.load(getClass().getResource("/org/example/eventmanagingsystem/views/dashboardView.fxml"));
+              //  dashboard = FXMLLoader.load(getClass().getResource("/org/example/eventmanagingsystem/views/dashboardView.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/org/example/eventmanagingsystem/views/dashboardView.fxml"));
+                dashboard = loader.load();
+                DashboardManager dashboardManager = loader.getController();
+                dashboardManager.assignUserReference(user);
             }catch(IOException ex)
             {
                 showAlert(AlertType.ERROR, "Error loading dashboard", ex.getMessage());
@@ -148,7 +152,7 @@ public class LoginManager {
             {
                 try
                 {
-                    OrganizerManager.addOrganizer(username, password, dob);
+                    OrganizerManager.addOrganizer(username, password, dob, address, gender);
                 }
                 catch (IllegalArgumentException ex)
                 {
@@ -210,8 +214,9 @@ public class LoginManager {
 
     private boolean login(String username, String password)
     {
-        for (Admin admin : Database.getAdminList()) {
+        for ( Admin admin : Database.getAdminList()) {
             if (admin.getUserName().equals(username) && admin.getPassword().equals(password)) {
+                user = admin;
                 return true;
             }
         }
@@ -219,6 +224,7 @@ public class LoginManager {
         // Check Organizer login
         for (Organizer organizer : Database.getOrganizerList()) {
             if (organizer.getUserName().equals(username) && organizer.getPassword().equals(password)) {
+                user = organizer;
                 return true;
             }
         }
@@ -226,10 +232,17 @@ public class LoginManager {
         // Check Attendee login
         for (Attendee attendee : Database.getAttendeeList()) {
             if (attendee.getUserName().equals(username) && attendee.getPassword().equals(password)) {
+                user = attendee;
                 return true;
             }
         }
 
         return false;
     }
+
+    //get user reference
+    public User getUserRef(){
+        return user;
+    }
+
 }

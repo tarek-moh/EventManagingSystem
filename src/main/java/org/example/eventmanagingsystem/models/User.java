@@ -1,6 +1,7 @@
 package org.example.eventmanagingsystem.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public abstract class User 
@@ -12,24 +13,36 @@ public abstract class User
     protected String userName;
     protected String password;
     protected LocalDate dateOfBirth;
+    protected String address;
+    protected Gender gender;
 
     // No-arg constructor
     public User() { }
 
     // Parameterised Constructor 
-    public User(String userName, String password, LocalDate dateOfBirth) {
+    public User(String userName, String password, LocalDate dateOfBirth,String address,Gender gender) {
         this.ID = ++userCount; // Increment the total users when a new one is created, Assign the user an ID
         this.userName = userName;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
+        this.address =address;
+        this.gender = gender;
     }
-    // Abstract method depends on user (models.Admin-models.Organizer-models.Attendee)
-    public abstract void showDashboard();
+
 
     // Getters and Setters 
     public int getId() {    return ID;    }
 
     public String getUserName() {    return this.userName;     }
+    public Gender getGender() {return gender;}
+    public String getAddress() {return address;}
+    public LocalDate getDateOfBirth() {return this.dateOfBirth;}
+
+    public String getDateOfBirthAsString(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+        String formatted = dateOfBirth.format(formatter);  // "31 December 2000"
+        return formatted;
+    }
 
     public void setUserName(String newUserName) throws IllegalArgumentException {
         if (newUserName == null || newUserName.trim().isEmpty()) {
@@ -77,7 +90,7 @@ public abstract class User
         this.password = newPassword;
     }
 
-    public LocalDate getDateOfBirth() {   return this.dateOfBirth;    }
+
 
     public void setDateOfBirth(int year, int month, int day) 
     {

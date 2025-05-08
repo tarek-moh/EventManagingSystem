@@ -12,17 +12,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.example.eventmanagingsystem.models.Attendee;
+import org.example.eventmanagingsystem.models.User;
 import org.example.eventmanagingsystem.services.Database;
 
 import java.util.ArrayList;
 
 
 public class DashboardManager {
+    /// ***********User logged in reference*********///
+    private User user;
 
     //******************* Event Form *******************//
     @FXML private VBox eventForm;
@@ -69,14 +76,30 @@ public class DashboardManager {
     @FXML private TableColumn<Attendee, String> genderColumn;
     @FXML private TableColumn<Attendee, String> addressColumn;
 
+    //*******************Profile View***************************//
+    @FXML private ImageView viewProfileButton;
+    @FXML private VBox profileForm;
+    @FXML private Text usernameField;
+    @FXML private Text IdField;
+    @FXML private Text genderField;
+    @FXML private Text dofbField;
+    @FXML private Text addressField;
+    private final BooleanProperty isProfileVisible = new SimpleBooleanProperty(false);
+    private final ParallelTransition myProfileFormZoomIn = new ParallelTransition();
+    private final ParallelTransition myProfileFormZoomOut = new ParallelTransition();
+
+
+
+
 
     @FXML
     public void initialize() {
-        // Set up transitions for both forms
+        // Set up transitions for all forms
         setupZoomTransition(eventForm, eventZoomIn, eventZoomOut, isEventVisible);
         setupZoomTransition(roomForm, roomZoomIn, roomZoomOut, isRoomVisible);
         setupZoomTransition(categoryForm, categoryZoomIn, categoryZoomOut, isCategoryVisible);
         setupZoomTransition(allAttendeesForm, allAttendeesFormZoomIn, allAttendeesFormZoomOut, isAllAttendeesFormVisible);
+        setupZoomTransition(profileForm, myProfileFormZoomIn, myProfileFormZoomOut, isProfileVisible);
 
         // Additional form-specific setup
         eventCategoryField.getItems().addAll("Concert", "Conference", "Workshop", "Exhibition");
@@ -89,6 +112,14 @@ public class DashboardManager {
         genderColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getGender().toString()));
         attendeeTable.setItems(attendees);
+
+//        viewProfileButton.setPickOnBounds(true);
+//        viewProfileButton.setOnMouseClicked(e -> {
+//            toggleProfile();
+//        });
+
+
+
 
     }
 
@@ -131,6 +162,9 @@ public class DashboardManager {
                 allAttendeesFormZoomOut.play();
                 cancelAllAttendeesLoading();
             }
+            else if(isProfileVisible.get()){
+                myProfileFormZoomOut.play();
+            }
         }
     }
 
@@ -159,6 +193,9 @@ public class DashboardManager {
                 allAttendeesFormZoomOut.play();
                 cancelAllAttendeesLoading();
             }
+            else if(isProfileVisible.get()){
+                myProfileFormZoomOut.play();
+            }
         }
     }
 
@@ -185,7 +222,11 @@ public class DashboardManager {
                 roomZoomOut.play();
             else if(isCategoryVisible.get())
                 categoryZoomOut.play();
+            else if(isProfileVisible.get()){
+                myProfileFormZoomOut.play();
+            }
         }
+
     }
 
 
@@ -227,8 +268,44 @@ public class DashboardManager {
     }
 
     @FXML
-    private void toggleProfile()
-    {}
+    private void toggleProfile() {
+        if(isProfileVisible.get()){
+            myProfileFormZoomOut.play();
+            System.out.println("profile toggle workkksss!!!");
+        }
+        else{
+            profileForm.setVisible(true);
+            myProfileFormZoomIn.play();
+            loadProfileInfo(user);     // <--------- load profile info
+
+            System.out.println("profile toggle shouldnt workkk!!!");
+            //hide all other forms
+            if(isEventVisible.get()){
+                eventZoomOut.play();
+            }
+            else if(isCategoryVisible.get()){
+               categoryZoomOut.play();
+            }
+            else if(isAllAttendeesFormVisible.get()){
+                allAttendeesFormZoomOut.play();
+            }
+            else if(isRoomVisible.get()){
+                roomZoomOut.play();
+            }
+        }
+    }
+
+
+    private void loadProfileInfo(User user){
+        usernameField.setText(user.getUserName());
+        IdField.setText(String.valueOf(user.getId()));
+        genderField.setText(user.getGender().toString());
+        dofbField.setText(user.getDateOfBirthAsString());
+        addressField.setText(user.getAddress());
+    }
+
+    public void assignUserReference(User user){ this.user = user;}
+
 
 
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {
@@ -274,5 +351,14 @@ public class DashboardManager {
             isVisible.set(false);
         });
     }
+    }
 
-}
+
+
+
+
+
+
+
+
+

@@ -29,17 +29,17 @@ public class Database{
         attendeeList.add(new Attendee("Laila", "helloWorld", LocalDate.of(1995, 2, 28), "Tanta", Gender.FEMALE));
         attendeeList.add(new Attendee("Nour", "nour789", LocalDate.of(2003, 11, 3), "Mansoura", Gender.FEMALE));
 
-        adminList.add(new Admin("Tarek", "password123", LocalDate.of(2002, 4, 20), "models.Event Manager", "09-16"));
-        adminList.add(new Admin("Omar", "adminpass", LocalDate.of(1995, 3, 10), "Venue Coordinator", "08-14"));
-        adminList.add(new Admin("Nour", "novelQueen", LocalDate.of(2001, 11, 3), "Tech Supervisor", "10-18"));
-        adminList.add(new Admin("Ahmed", "rootAccess", LocalDate.of(1990, 6, 25), "Operations Lead", "07-15"));
-        adminList.add(new Admin("Mona", "admin123", LocalDate.of(1998, 1, 30), "Security Head", "11-20"));
+        adminList.add(new Admin("Tarek", "password123", LocalDate.of(2002, 4, 20), "models.Event Manager", "09-16","Cairo", Gender.MALE));
+        adminList.add(new Admin("Omar", "adminpass", LocalDate.of(1995, 3, 10), "Venue Coordinator", "08-14", "Cairo", Gender.FEMALE));
+        adminList.add(new Admin("Nour", "novelQueen", LocalDate.of(2001, 11, 3), "Tech Supervisor", "10-18", "Cairo", Gender.MALE));
+        adminList.add(new Admin("Ahmed", "rootAccess", LocalDate.of(1990, 6, 25), "Operations Lead", "07-15", "Cairo", Gender.FEMALE));
+        adminList.add(new Admin("Mona", "admin123", LocalDate.of(1998, 1, 30), "Security Head", "11-20", "Cairo", Gender.FEMALE));
 
-        organizerList.add(new Organizer("Tarek", "password123", LocalDate.of(2002, 4, 20)));
-        organizerList.add(new Organizer("Omar", "organizer456", LocalDate.of(1999, 8, 12)));
-        organizerList.add(new Organizer("Nour", "mysteryBooks", LocalDate.of(2001, 11, 3)));
-        organizerList.add(new Organizer("Lina", "eventsPro", LocalDate.of(1997, 2, 27)));
-        organizerList.add(new Organizer("Youssef", "letsPlanIt", LocalDate.of(2000, 6, 15)));
+        organizerList.add(new Organizer("Tarek", "password123", LocalDate.of(2002, 4, 20),"Cairo", Gender.MALE));
+        organizerList.add(new Organizer("Omar", "organizer456", LocalDate.of(1999, 8, 12), "Cairo", Gender.MALE));
+        organizerList.add(new Organizer("Nour", "mysteryBooks", LocalDate.of(2001, 11, 3), "Cairo", Gender.FEMALE));
+        organizerList.add(new Organizer("Lina", "eventsPro", LocalDate.of(1997, 2, 27),"Cairo", Gender.FEMALE));
+        organizerList.add(new Organizer("Youssef", "letsPlanIt", LocalDate.of(2000, 6, 15), "Cairo", Gender.MALE));
 
         roomList.add(new Room("10-12,18-20",100));
         roomList.add(new Room("14-16,09-11",100));
