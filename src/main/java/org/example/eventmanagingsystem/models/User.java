@@ -23,8 +23,6 @@ public abstract class User
         this.password = password;
         this.dateOfBirth = dateOfBirth;
     }
-    // Abstract method depends on user (models.Admin-models.Organizer-models.Attendee)
-    public abstract void showDashboard();
 
     // Getters and Setters 
     public int getId() {    return ID;    }

@@ -60,6 +60,7 @@ public class Database{
         eventTree.insert(new Event("Tech Talk 2025", "Exploring the future of AI and Quantum Computing", organizerList.get(2), "Technology", "14-16", 0));
         eventTree.insert(new Event("Painting Workshop", "Hands-on acrylic painting workshop for beginners", organizerList.get(3), "Art", "09-11", 75));
         eventTree.insert(new Event("Poetry Slam", "An open mic night for poetry lovers", organizerList.get(4), "Literature", "20-22", 50));
+
     }
 
     // Getters
@@ -73,6 +74,7 @@ public class Database{
         return adminList;
     }
     public static ArrayList<Event> getEventList() {return eventTree.inOrderTraversal();}
+    public static SplayTree<Event> getEventTree() {return eventTree;}
     public static ArrayList<Room> getRoomList() {return roomList;}
     public static ArrayList<myCategory> getCategoryList() {
         return categoryList;

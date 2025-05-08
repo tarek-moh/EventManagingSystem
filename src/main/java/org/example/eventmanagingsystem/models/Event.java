@@ -70,7 +70,12 @@ public class Event implements Comparable<Event> {
 
     @Override
     public int compareTo(Event other) {
-        return Integer.compare(this.priorityScore(), other.priorityScore());
+        int priorityCompare = Integer.compare(this.priorityScore(), other.priorityScore());
+        if (priorityCompare != 0) {
+            return priorityCompare;
+        }
+        // Use title as tie-breaker to ensure unique ordering
+        return this.title.compareTo(other.title);
     }
 
     private int priorityScore()

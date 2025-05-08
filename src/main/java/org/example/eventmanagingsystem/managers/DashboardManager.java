@@ -5,7 +5,6 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -110,8 +108,13 @@ public class DashboardManager {
         setupZoomTransition(allEventsTable, allEventsZoomIn, allEventsZoomOut, isAllEventsVisible);
         setupZoomTransition(allRoomsTable, allRoomsZoomIn, allRoomsZoomOut, isAllRoomsVisible);
         // Additional form-specific setup
-        eventCategoryField.getItems().addAll("Concert", "Conference", "Workshop", "Exhibition");
+        ArrayList<myCategory> categories = Database.getCategoryList();
+        ArrayList<String> catNames = new ArrayList<>();
+        for(myCategory cat : categories)
+            catNames.add(cat.getName());
+        eventCategoryField.getItems().addAll(catNames);
 
+        attendees.addAll(Database.getAttendeeList());
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -120,12 +123,15 @@ public class DashboardManager {
                 new SimpleStringProperty(cellData.getValue().getGender().toString()));
         attendeeTable.setItems(attendees);
 
+
+        events.addAll(Database.getEventList());
         eventTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         ticketPriceColumn.setCellValueFactory(new PropertyValueFactory<>("ticketPrice"));
         eventTimeColumn.setCellValueFactory(new PropertyValueFactory<>("timeslot"));
         eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         eventsTable.setItems(events);
 
+        rooms.addAll(Database.getRoomList());
         roomIdColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
         roomCapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         roomsTable.setItems(rooms);

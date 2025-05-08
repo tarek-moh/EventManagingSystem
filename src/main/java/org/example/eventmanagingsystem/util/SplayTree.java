@@ -34,25 +34,46 @@ public class SplayTree<T extends Comparable<T>> {
      * @param value The value to insert
      */
     public void insert(T value) {
-        root = insert(root, value);
-        root = splay(search(value));
+        // Handle memory allocation (Java doesn't need explicit memory checks)
+        Node<T> newNode = new Node<>(value);
+
+        // Special case: empty tree
+        if (root == null) {
+            root = newNode;
+            nodeCount++;
+            return;
+        }
+
+        // Iterative BST insertion
+        Node<T> current = root;
+        Node<T> parent = null;
+
+        while (current != null) {
+            parent = current;
+            int cmp = value.compareTo(current.data);
+
+            if (cmp == 0) {
+                // Duplicate found - splay this node to root
+                root = splay(current);
+                return;
+            } else if (cmp < 0) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+
+        // Insert the new node
+        newNode.parent = parent;
+        if (value.compareTo(parent.data) < 0) {
+            parent.left = newNode;
+        } else {
+            parent.right = newNode;
+        }
+
+        // Splay the new node to root
+        root = splay(newNode);
         nodeCount++;
-    }
-
-    private Node<T> insert(Node<T> node, T value) {
-        if (node == null) {
-            return new Node<>(value);
-        }
-
-        if (value.compareTo(node.data) < 0) {
-            node.left = insert(node.left, value);
-            node.left.parent = node;
-        } else if (value.compareTo(node.data) > 0) {
-            node.right = insert(node.right, value);
-            node.right.parent = node;
-        }
-
-        return node;
     }
 
     /**
@@ -142,7 +163,9 @@ public class SplayTree<T extends Comparable<T>> {
 
     // Splay tree specific operations
     private Node<T> splay(Node<T> node) {
-        while (node != null && node.parent != null) {
+        if (node == null) return null;
+
+        while (node.parent != null) {
             Node<T> parent = node.parent;
             Node<T> grandparent = parent.parent;
 
@@ -180,54 +203,49 @@ public class SplayTree<T extends Comparable<T>> {
         return node;
     }
 
-    private void rotateLeft(Node<T> node) {
-        Node<T> rightChild = node.right;
-        if (rightChild != null) {
-            node.right = rightChild.left;
-            if (rightChild.left != null) {
-                rightChild.left.parent = node;
-            }
-            rightChild.parent = node.parent;
+    private void rotateLeft(Node<T> x) {
+        Node<T> y = x.right;
+        if (y == null) return;
+
+        x.right = y.left;
+        if (y.left != null) {
+            y.left.parent = x;
         }
 
-        if (node.parent == null) {
-            root = rightChild;
-        } else if (node == node.parent.left) {
-            node.parent.left = rightChild;
+        y.parent = x.parent;
+        if (x.parent == null) {
+            root = y;
+        } else if (x == x.parent.left) {
+            x.parent.left = y;
         } else {
-            node.parent.right = rightChild;
+            x.parent.right = y;
         }
 
-        if (rightChild != null) {
-            rightChild.left = node;
-        }
-        node.parent = rightChild;
+        y.left = x;
+        x.parent = y;
     }
 
-    private void rotateRight(Node<T> node) {
-        Node<T> leftChild = node.left;
-        if (leftChild != null) {
-            node.left = leftChild.right;
-            if (leftChild.right != null) {
-                leftChild.right.parent = node;
-            }
-            leftChild.parent = node.parent;
+    private void rotateRight(Node<T> x) {
+        Node<T> y = x.left;
+        if (y == null) return;
+
+        x.left = y.right;
+        if (y.right != null) {
+            y.right.parent = x;
         }
 
-        if (node.parent == null) {
-            root = leftChild;
-        } else if (node == node.parent.right) {
-            node.parent.right = leftChild;
+        y.parent = x.parent;
+        if (x.parent == null) {
+            root = y;
+        } else if (x == x.parent.right) {
+            x.parent.right = y;
         } else {
-            node.parent.left = leftChild;
+            x.parent.left = y;
         }
 
-        if (leftChild != null) {
-            leftChild.right = node;
-        }
-        node.parent = leftChild;
+        y.right = x;
+        x.parent = y;
     }
-
     /**
      * @return List of all values in the tree in in-order traversal
      */

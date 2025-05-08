@@ -7,16 +7,6 @@ import org.example.eventmanagingsystem.services.Database;
 import java.time.LocalDate;
 
 public class AttendeeManager {
-    public static void showAllAttendees()
-    {
-        for(Attendee attendee : Database.getAttendeeList())
-        {
-            System.out.println("====================");
-            attendee.showAttendeeDetails();
-            System.out.println("====================");
-
-        }
-    }
 
     // Custom exceptions
     static class InvalidInputException extends Exception {

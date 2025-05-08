@@ -4,14 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="Basic dashboard for all users. Added the chat files not complete">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/util/SplayTree.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/images/usd-circle.png" afterDir="false" />
+    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="WIP: Current dashboard changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/AttendeeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/AttendeeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/CategoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Attendee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Attendee.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/util/SplayTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/util/SplayTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +68,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "dashboard",
@@ -153,6 +158,7 @@
     <MESSAGE value="Basic files for creating profile" />
     <MESSAGE value="basic structure for adding network basics" />
     <MESSAGE value="Basic dashboard for all users. Added the chat files not complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic dashboard for all users. Added the chat files not complete" />
+    <MESSAGE value="WIP: Current dashboard changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP: Current dashboard changes" />
   </component>
 </project>
