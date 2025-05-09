@@ -19,7 +19,7 @@ public class CategoryManager {
     {
         myCategory newCategory = new myCategory();
         newCategory.setName(newcategoryName);
-        Database.getCategoryList().add(newCategory);
+        Database.addCategory(newCategory);
         System.out.println("Category created successfully");
     }
 

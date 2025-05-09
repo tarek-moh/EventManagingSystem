@@ -231,6 +231,14 @@ public class LoginManager {
         return false;
     }
 
+
+    public void setloginUsernameField(String username){
+        loginUsernameField.setText(username);
+    }
+    public void setloginPasswordField(String password){
+        loginPasswordField.setText(password);
+    }
+
     //get user reference
     public User getUserRef(){
         return user;

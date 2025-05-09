@@ -157,9 +157,7 @@ public class SplayTree<T extends Comparable<T>> {
     /**
      * @return Number of nodes in the tree
      */
-    public int size() {
-        return nodeCount;
-    }
+    public int size() {return nodeCount;}
 
     // Splay tree specific operations
     private Node<T> splay(Node<T> node) {

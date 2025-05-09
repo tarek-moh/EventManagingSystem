@@ -97,7 +97,6 @@ public class Organizer extends User {
             System.out.println("Error: Invalid event ID");
             return false;
         }
-
         // Find the event by ID
         for (int i = 0; i < Database.getEventList().size(); i++) {
             if (Database.getEventList().get(i).getEventID().equals(eventId)) {

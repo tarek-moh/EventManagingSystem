@@ -53,13 +53,14 @@ public class myCategory {
     {
         if (newName == null || newName.trim().isEmpty()) {
             throw new IllegalArgumentException("Category name cannot be null or empty.");
-        }
 
-        for(myCategory cat : Database.getCategoryList())
-        {
-            if(cat.getName().equalsIgnoreCase(newName.trim()))
-            {  throw new IllegalArgumentException("Category name is already made");  }
         }
+        for (myCategory cat : Database.getCategoryList()) {
+            if (cat.getName().equalsIgnoreCase(newName.trim())) {
+                throw new IllegalArgumentException("Category name is already made");
+            }
+        }
+        this.name = newName;
     }
 
     public String toString(){

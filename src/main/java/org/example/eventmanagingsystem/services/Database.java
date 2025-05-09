@@ -58,6 +58,7 @@ public class Database{
         categoryList.add(new myCategory("Photography"));
         categoryList.add(new myCategory("Stand-up Comedy"));
         categoryList.add(new myCategory("Business & Startups"));
+        categoryList.add(new myCategory("blablabla"));
 
         eventTree.insert(new Event("Nocturne in C# Minor", "Frederic Chopin piece", organizerList.get(0), "Classical Music", "10-12", 100));
         eventTree.insert(new Event("Jazz Night", "Smooth jazz evening with live saxophone", organizerList.get(1), "Jazz", "18-20", 150));
@@ -87,11 +88,11 @@ public class Database{
 
     ////////////////////////// CRUD operations for *ATTENDEE* //////////////////////
     // CREATE
+    public static void addCategory(myCategory category){categoryList.add(category); }
 
-    public static void addAttendee(Attendee attendee)
-    {
-        attendeeList.add(attendee);
-    }
+    public static void addAttendee(Attendee attendee) {attendeeList.add(attendee);}
+
+    public static void addRoom(Room room){roomList.add(room);}
 
     // READ
     public static Attendee getAttendee(int id)

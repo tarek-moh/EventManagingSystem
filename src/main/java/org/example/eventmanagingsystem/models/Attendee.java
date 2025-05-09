@@ -31,7 +31,6 @@ public class Attendee extends User
         attendeeCount++;
     }
 
-
     // Helper methods
 
     private short getValidChoice(int min, int max) {
@@ -64,7 +63,6 @@ public class Attendee extends User
             updateWallet(amount, walletChoice);
         }
     }
-
 
     // helper methods
     private void changeUsername() {
