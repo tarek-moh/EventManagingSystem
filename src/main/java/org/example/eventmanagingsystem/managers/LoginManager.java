@@ -231,7 +231,6 @@ public class LoginManager {
         return false;
     }
 
-
     public void setloginUsernameField(String username){
         loginUsernameField.setText(username);
     }

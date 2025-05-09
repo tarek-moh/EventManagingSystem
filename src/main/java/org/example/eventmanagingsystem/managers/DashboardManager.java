@@ -130,6 +130,7 @@ public class DashboardManager {
     @FXML private ComboBox<String> eventStartField;
     @FXML private ComboBox<String> eventEndField;
     @FXML private HBox viewRoomsButton;
+    @FXML private HBox viewMyEventsButton;
 
     //******************* Balance  *******************//
     @FXML private Label balanceLabel;
@@ -155,6 +156,17 @@ public class DashboardManager {
     private final BooleanProperty isTicketsVisible = new SimpleBooleanProperty(false);
     @FXML private VBox ticketsPane;
     private ObservableList<Ticket> myTickets = FXCollections.observableArrayList();
+    @FXML HBox ticketsButton;
+
+    //*****************My Events******************//
+    @FXML ListView<Event> eventListView;
+    private final ParallelTransition myEventsZoomIn = new ParallelTransition();
+    private final ParallelTransition myEventsZoomOut = new ParallelTransition();
+    private final BooleanProperty isMyEventsVisible = new SimpleBooleanProperty(false);
+    @FXML private VBox myEventsPane;
+    private ObservableList<Ticket> myEvents = FXCollections.observableArrayList();
+    @FXML HBox myEventsButton;
+
 
     @FXML
     public void initialize() {
@@ -169,6 +181,7 @@ public class DashboardManager {
         setupZoomTransition(allRoomsTable, allRoomsZoomIn, allRoomsZoomOut, isAllRoomsVisible);
         setupZoomTransition(interestsPane, interestsZoomIn, interestsZoomOut, isInterestsVisible);
         setupZoomTransition(ticketsPane, ticketsZoomIn, ticketsZoomOut, isTicketsVisible);
+        setupZoomTransition(myEventsPane, myEventsZoomIn, myEventsZoomOut, isMyEventsVisible);
 
         // populate combo boxes
         eventStartField.setItems(HOURS);
@@ -222,7 +235,6 @@ public class DashboardManager {
                     System.out.println(eventObj);
                     if(((Attendee)user).buyTicket(eventObj))
                     {
-                        ((Attendee)user).getWallet().deductFunds(eventObj.getTicketPrice());
                         myTickets.clear();
                         myTickets.addAll(((Attendee)user).getMyTickets());
                         showAlert(Alert.AlertType.INFORMATION, "Ticket purchased", "Ticket Purchased successfully");
@@ -244,17 +256,6 @@ public class DashboardManager {
             }
         });
     }
-
-        // TODO: needs current user from session inorder to call their respective getBalance
-//        balanceLabel.textProperty().bind(
-//                Bindings.createStringBinding(() -> {
-//                            double bal = currentUser.getWallet().getBalance();
-//                            String color = bal < 0 ? "red" : bal < 50 ? "orange" : "green";
-//                            return String.format("-fx-text-fill: %s; Balance: $%.2f", color, bal);
-//                        },
-//                        currentUser.getWallet().balanceProperty()
-//                );
-// }
 
     @FXML
     private void toggleEventForm() {
@@ -285,6 +286,9 @@ public class DashboardManager {
             }
             else if (isProfileVisible.get()) {
             myProfileFormZoomOut.play();
+            } else if (isMyEventsVisible.get())
+            {
+                myEventsZoomOut.play();
             }
         }
     }
@@ -361,6 +365,9 @@ public class DashboardManager {
             {
                 allRoomsZoomOut.play();
                // cancelAllRoomsLoading();
+            } else if (isMyEventsVisible.get())
+            {
+                myEventsZoomOut.play();
             }
         }
     }
@@ -417,6 +424,9 @@ public class DashboardManager {
             {
                 allRoomsZoomOut.play();
               //  cancelAllRoomsLoading();
+            } else if (isMyEventsVisible.get())
+            {
+                myEventsZoomOut.play();
             }
         }
     }
@@ -437,6 +447,7 @@ public class DashboardManager {
 
     }
 
+    // TODO: Needs testing whether it shows the organizer's event attendees.
     @FXML
     private void toggleAllAttendeesForm()
     {
@@ -467,13 +478,16 @@ public class DashboardManager {
             {
                 allRoomsZoomOut.play();
                 //cancelAllRoomsLoading();
+            } else if (isMyEventsVisible.get())
+            {
+                myEventsZoomOut.play();
             }
         }
 
     }
 
-    // TODO: Needs testing whether a user gets added to the organizer's attendee list if they purchased a ticket for the
-    // organizer's event
+    /// TODO: Needs testing whether a user gets added to the organizer's attendee list if they purchased a ticket for the
+    /// organizer's event
     private void loadAttendeeTable(User currentUser) {
         attendees.clear();
 
@@ -585,6 +599,9 @@ public class DashboardManager {
             else if(isTicketsVisible.get())
             {
                 ticketsZoomOut.play();
+            } else if (isMyEventsVisible.get())
+            {
+                myEventsZoomOut.play();
             }
         }
     }
@@ -655,6 +672,9 @@ public class DashboardManager {
                   //  cancelAllRoomsLoading();
                 } else if (isProfileVisible.get()) {
                     myProfileFormZoomOut.play();
+                } else if (isMyEventsVisible.get())
+                {
+                    myEventsZoomOut.play();
                 }
         }
 
@@ -767,9 +787,46 @@ public class DashboardManager {
                 myProfileFormZoomOut.play();
             } else if (isInterestsVisible.get()) {
                 interestsZoomOut.play();
+            } else if (isMyEventsVisible.get())
+            {
+                myEventsZoomOut.play();
             }
         }
     }
+
+    @FXML
+    private void toggleMyEvents() {
+        if (isMyEventsVisible.get()) {
+            myEventsZoomOut.play();
+        } else {
+            myEventsPane.setVisible(true);
+            myEventsZoomIn.play();
+
+            // Hide other views
+            if (isEventVisible.get())
+                eventZoomOut.play();
+            else if (isRoomVisible.get())
+                roomZoomOut.play();
+            else if (isCategoryVisible.get())
+                categoryZoomOut.play();
+            else if (isAllAttendeesFormVisible.get()) {
+                allAttendeesFormZoomOut.play();
+                cancelAllAttendeesLoading();
+            } else if (isAllEventsVisible.get()) {
+                allEventsZoomOut.play();
+                cancelAllEventsLoading();
+            } else if (isAllRoomsVisible.get()) {
+                allRoomsZoomOut.play();
+            } else if (isProfileVisible.get()) {
+                myProfileFormZoomOut.play();
+            } else if (isInterestsVisible.get()) {
+                interestsZoomOut.play();
+            } else if (isTicketsVisible.get()) {
+                ticketsZoomOut.play();
+            }
+        }
+    }
+
 
     private void loadInterests(Attendee attendee) {
         selectedInterestsPane.getChildren().clear();
@@ -892,17 +949,26 @@ public class DashboardManager {
             viewAttendeesButton.setVisible(true);
             viewRoomsButton.setVisible(true);
             manageInterestsButton.setVisible(false);
+            ticketsButton.setVisible(false);
+            viewMyEventsButton.setVisible(false);
         }
         else if (user instanceof Organizer) {
             eventFormButton.setVisible(true);
             roomFormButton.setVisible(true);
             categoryFormButton.setVisible(false);
-            viewEventsButton.setVisible(true);
             balanceLabel.setVisible(true);
             viewAttendeesButton.setVisible(true);
             viewRoomsButton.setVisible(true);
             bindBalance(((Organizer) user).getWallet().balanceProperty());
             manageInterestsButton.setVisible(false);
+            ticketsButton.setVisible(false);
+            viewEventsButton.setVisible(false);
+            viewMyEventsButton.setVisible(true);
+
+            //List<Event> myEvents = ((Organizer)user).get;
+            //System.out.println("Ticket count: " + tickets.size()); // debug
+            viewMyEventsButton.setVisible(false);
+
         }
         else if (user instanceof Attendee) {
             eventFormButton.setVisible(false);
@@ -915,8 +981,11 @@ public class DashboardManager {
             bindBalance(((Attendee) user).getWallet().balanceProperty());
             manageInterestsButton.setVisible(true);
             loadInterests((Attendee)user);
+
             List<Ticket> tickets = ((Attendee)user).getMyTickets();
             System.out.println("Ticket count: " + tickets.size()); // debug
+            viewMyEventsButton.setVisible(false);
+
 
             myTickets.addAll(tickets);
             ticketsListView.setItems(myTickets);
@@ -931,6 +1000,7 @@ public class DashboardManager {
                     }
                 }
             });
+
 
         }
     }

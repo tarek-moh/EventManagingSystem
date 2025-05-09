@@ -31,16 +31,30 @@
                <children>
                   <FlowPane hgap="10.0" prefHeight="453.0" prefWidth="512.0" vgap="10.0">
                      <children>
-                        <HBox fx:id="viewEventsButton" alignment="CENTER" onMouseClicked="#toggleAllEvents" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
+                        <StackPane prefHeight="138.0" prefWidth="222.0">
                            <children>
-                              <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="View Events" textAlignment="CENTER" />
-                              <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/calendar-star.png" />
-                                 </image>
-                              </ImageView>
+                              <HBox fx:id="viewEventsButton" alignment="CENTER" onMouseClicked="#toggleAllEvents" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
+                                 <children>
+                                    <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="View Events" textAlignment="CENTER" />
+                                    <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/calendar-star.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="viewMyEventsButton" alignment="CENTER" onMouseClicked="#toggleMyEvents" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
+                                 <children>
+                                    <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="My Events" textAlignment="CENTER" />
+                                    <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/calendar-star.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
+                        </StackPane>
                         <StackPane prefHeight="138.0" prefWidth="222.0">
                            <children>
                               <HBox fx:id="viewAttendeesButton" alignment="CENTER" onMouseClicked="#toggleAllAttendeesForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
@@ -410,7 +424,16 @@
             <VBox fx:id="ticketsPane" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="364.0" spacing="10.0" styleClass="form-pane" stylesheets="@../styles.css" visible="false">
                <children>
                   <Label styleClass="dashboard-text-label" stylesheets="@../styles.css" text="My Tickets" />
-                  <ListView fx:id="ticketsListView" prefHeight="267.0" prefWidth="352.0" />
+                  <ListView fx:id="ticketsListView" prefHeight="636.0" prefWidth="352.0" />
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </VBox>
+            <VBox fx:id="myEventsPane" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="364.0" spacing="10.0" styleClass="form-pane" stylesheets="@../styles.css">
+               <children>
+                  <Label styleClass="dashboard-text-label" stylesheets="@../styles.css" text="My Events" />
+                  <ListView fx:id="myEventList" prefHeight="636.0" prefWidth="352.0" />
                </children>
                <padding>
                   <Insets left="5.0" right="5.0" />
