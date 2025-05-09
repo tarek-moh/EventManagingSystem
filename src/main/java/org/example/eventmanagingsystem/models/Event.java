@@ -7,10 +7,14 @@ import org.example.eventmanagingsystem.managers.CategoryManager;
 import org.example.eventmanagingsystem.managers.RoomManager;
 import org.example.eventmanagingsystem.services.Database;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import javafx.scene.image.Image;
+import java.io.File;
+
 /**
  * The {@code models.Event} class represents an event that can be booked and attended.
  * It includes attributes such as title, description, category, time slot, and associated room.
@@ -32,6 +36,7 @@ import java.util.Date;
  * @author Nour
  */
 public class Event implements Comparable<Event> {
+
     //attributes
     private static int evCounter = 1000;
     private String eventID;
@@ -44,19 +49,24 @@ public class Event implements Comparable<Event> {
     private Room room;
     private ArrayList <Ticket> soldTickets;
     private ArrayList<Attendee> attendees;
+    private Image image;
+
+
 
     public Event(){
         this.eventID =generateEventID();//patterned id ex: EVT202504201000
         soldTickets=new ArrayList<>();
         attendees=new ArrayList<>();
+        setDefaultImage();
     }
 
     //constructor
-    public Event(String title, String description, Organizer organizer, String category, String timeslot, double ticketPrice){
+    public Event(String title, String description, Organizer organizer, String category, String timeslot, double ticketPrice, File imageFile){
         this.eventID =generateEventID();//patterned id ex: EVT202504201000
         this.title = title;
         this.description = description;
         this.organizer = organizer;
+
         if(CategoryManager.isValid(category))
         {
             this.category = category;
@@ -72,6 +82,7 @@ public class Event implements Comparable<Event> {
         soldTickets=new ArrayList<>();
         attendees=new ArrayList<>();
         this.ticketPrice = ticketPrice;
+        setImage(imageFile);
     }
 
     @Override
@@ -124,24 +135,6 @@ public class Event implements Comparable<Event> {
         return attendees.size();
     }
 
-    public void showEventDetails(){
-       //ig it's gonna change when implementing the GUI!!
-        System.out.println("Event ID: " + eventID);
-        System.out.println("Title: " + title);
-        System.out.println("Description: " + description);
-        System.out.println("Organizer: "+ organizer.getUserName());
-        System.out.println("Category: " + category);
-        System.out.println("Time Slot: " + timeslot);
-        System.out.println("Ticket Price: " + ticketPrice + " EGP");
-        System.out.println("Total Attendees Registered:"+ attendeesCount());
-
-    }
-    public void showEventAttendees(){
-        System.out.println("List of attendees:");
-        for(int i=0;i<attendees.size();i++) {
-            System.out.println(attendees.get(i));
-        }
-    }
 
     public String toString(){
         return eventID+","+title+", "+description+", "+organizer+", "+category+", "+timeslot+", "+ticketPrice+", "+ attendeesCount()+".";
@@ -152,6 +145,7 @@ public class Event implements Comparable<Event> {
     public String getCategory() { return category; }  // No setter - final field
     public String getDescription() { return description; }
     public String getTimeslot() { return timeslot; }
+    public Image getImage() {return image;}
 
     // setters with validation
     public void setTitle(String title) {
@@ -213,5 +207,27 @@ public class Event implements Comparable<Event> {
                 Database.deleteAttendee(a.ID);}
         }
     }
+
+
+    private void setDefaultImage(){
+        try {
+            this.image = new Image(getClass().getResourceAsStream("src/main/resources/org/example/eventmanagingsystem/images/musicPlaying.jpg"));
+        }catch (Exception ex){
+            System.err.println("Failed to load default event image: " + ex.getMessage());
+            this.image = null;
+        }
+    }
+
+
+    private void setImage(File imageFile){
+        if (imageFile != null && imageFile.exists()){
+            this.image = new Image(imageFile.toURI().toString());
+        }
+        else {
+            setDefaultImage();
+        }
+    }
+
+
 
 }

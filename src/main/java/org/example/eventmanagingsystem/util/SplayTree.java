@@ -1,6 +1,8 @@
 package org.example.eventmanagingsystem.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * Generic Splay Tree implementation in Java
@@ -259,5 +261,10 @@ public class SplayTree<T extends Comparable<T>> {
             result.add(node.data);
             inOrderTraversal(node.right, result);
         }
+    }
+    public ArrayList<T> getTopEvents(int count){
+        ArrayList<T> allEvents = inOrderTraversal();
+        Collections.sort(allEvents,Collections.reverseOrder());
+        return new ArrayList<>(allEvents.stream().limit(count).collect(Collectors.toList()));
     }
 }

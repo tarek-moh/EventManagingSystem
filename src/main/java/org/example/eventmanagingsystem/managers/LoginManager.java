@@ -112,6 +112,10 @@ public class LoginManager {
             {
                 showAlert(AlertType.ERROR, "Error loading dashboard", ex.getMessage());
             }
+            if (primaryStage == null) {
+                // Fallback to dynamic stage detection
+                primaryStage = (Stage) loginUsernameField.getScene().getWindow();
+            }
             Scene scene = new Scene(dashboard);
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
@@ -239,8 +243,15 @@ public class LoginManager {
     }
 
     //get user reference
-    public User getUserRef(){
+    public  User getUserRef(){
         return user;
+    }
+
+    @FXML
+    public void initializeWithCredentials(String username, String password) {
+        // Make sure these fields are @FXML annotated in your controller
+        loginUsernameField.setText(username);
+        loginPasswordField.setText(password);
     }
 
 }
