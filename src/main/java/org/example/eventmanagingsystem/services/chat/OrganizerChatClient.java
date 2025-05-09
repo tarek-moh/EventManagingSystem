@@ -1,5 +1,7 @@
 package org.example.eventmanagingsystem.services.chat;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -10,6 +12,9 @@ import java.net.Socket;
 
 public class OrganizerChatClient
 {
+    @FXML
+    public void onClearClicked(ActionEvent actionEvent) {
+    }
 
     public class ChatClient extends Application {
 

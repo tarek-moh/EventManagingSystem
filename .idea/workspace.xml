@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="implemented chat view final">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/OrganizerChatClient.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/organizerchat1.fxml" afterDir="false" />
+    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="chat ready for run">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/ChatManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/ChatManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/chat/OrganizerChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/chat/OrganizerChatClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/organizerchat1.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/organizerchat1.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746652396224</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="chat ready for run">
+      <option name="closed" value="true" />
+      <created>1746715017944</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746715017944</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +187,7 @@
     <MESSAGE value="add file network basics" />
     <MESSAGE value="implemented chat view" />
     <MESSAGE value="implemented chat view final" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented chat view final" />
+    <MESSAGE value="chat ready for run" />
+    <option name="LAST_COMMIT_MESSAGE" value="chat ready for run" />
   </component>
 </project>

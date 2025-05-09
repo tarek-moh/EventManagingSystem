@@ -16,7 +16,9 @@ import java.io.IOException;
 public class ChatManager
 {
 
-        @FXML
+
+
+    @FXML
         private TextArea chatArea;
 
         @FXML
@@ -69,6 +71,7 @@ public class ChatManager
             });
         }
 
+    @FXML
     public void onClearClicked(ActionEvent actionEvent) {
     }
 }

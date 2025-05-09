@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 
 public class DashboardManager {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/eventmanagingsystem/views/dashboardView.fxml"));
 
     //******************* Event Form *******************//
     @FXML private VBox eventForm;
