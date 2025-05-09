@@ -3,6 +3,7 @@ package org.example.eventmanagingsystem.services;
 import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.util.SplayTree;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -56,11 +57,11 @@ public class Database{
         categoryList.add(new myCategory("Business & Startups"));
         categoryList.add(new myCategory("blablabla"));
 
-        eventTree.insert(new Event("Nocturne in C# Minor", "Frederic Chopin piece", organizerList.get(0), "Classical Music", "10-12", 100));
-        eventTree.insert(new Event("Jazz Night", "Smooth jazz evening with live saxophone", organizerList.get(1), "Jazz", "18-20", 150));
-        eventTree.insert(new Event("Tech Talk 2025", "Exploring the future of AI and Quantum Computing", organizerList.get(2), "Technology", "14-16", 0));
-        eventTree.insert(new Event("Painting Workshop", "Hands-on acrylic painting workshop for beginners", organizerList.get(3), "Art", "09-11", 75));
-        eventTree.insert(new Event("Poetry Slam", "An open mic night for poetry lovers", organizerList.get(4), "Literature", "20-22", 50));
+        eventTree.insert(new Event("Nocturne in C# Minor", "Frederic Chopin piece", organizerList.get(0), "Classical Music", "10-12", 100,new File("src/main/resources/org/example/eventmanagingsystem/images/musicPlaying.jpg")));
+        eventTree.insert(new Event("Jazz Night", "Smooth jazz evening with live saxophone", organizerList.get(1), "Jazz", "18-20", 150,new File("src/main/resources/org/example/eventmanagingsystem/images/jazzEV.jpeg")));
+        eventTree.insert(new Event("Tech Talk 2025", "Exploring the future of AI and Quantum Computing", organizerList.get(2), "Technology", "14-16", 0,new File("src/main/resources/org/example/eventmanagingsystem/images/TechtalkEV.jpg")));
+        eventTree.insert(new Event("Painting Workshop", "Hands-on acrylic painting workshop for beginners", organizerList.get(3), "Art", "09-11", 75,new File("src/main/resources/org/example/eventmanagingsystem/images/paintingEV2.jpeg")));
+      //  eventTree.insert(new Event("Poetry Slam", "An open mic night for poetry lovers", organizerList.get(4), "Literature", "20-22", 50,new File("src/main/resources/org/example/eventmanagingsystem/images/musicPlaying.jpg")));
 
     }
 

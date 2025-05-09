@@ -4,6 +4,7 @@ import org.example.eventmanagingsystem.models.Attendee;
 import org.example.eventmanagingsystem.models.Event;
 import org.example.eventmanagingsystem.services.Database;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -14,7 +15,7 @@ public class EventManager {
     }
 
     public static void addEvent(String title, String description, String category, double ticketprice)
-            throws IllegalArgumentException    {
+            throws IllegalArgumentException , IOException {
         Event ev = new Event();
         ev.setTitle(title);
         ev.setDescription(description);
@@ -23,6 +24,7 @@ public class EventManager {
         //ev.setTimeslot();
 
         Database.getEventList().add(ev);
+        Database.getEventTree().insert(ev);
         System.out.println("Event added successfully");
     }
 

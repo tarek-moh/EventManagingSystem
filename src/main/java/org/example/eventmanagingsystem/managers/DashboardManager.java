@@ -1,9 +1,6 @@
 package org.example.eventmanagingsystem.managers;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransition;
-import javafx.animation.ScaleTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -21,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -136,6 +135,11 @@ public class DashboardManager {
     //*****************logout button******************//
     @FXML private Button logoutButton;
 
+
+    // *******************advertisement***************//
+    @FXML private Pagination eventCarousel;
+
+
     @FXML
     public void initialize() {
         // Set up transitions for all forms
@@ -209,6 +213,10 @@ public class DashboardManager {
 
         //registerButton.setOnAction(event->handleRegister());
         eventCreateButton.setOnAction(event->handleCreateEvent());
+
+//        eventCarousel.setPageCount(2);
+//        eventCarousel.setPageFactory(this::createPage);
+        setupPagination();
     }
 
         // TODO: needs current user from session inorder to call their respective getBalance
@@ -289,6 +297,9 @@ public class DashboardManager {
             showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for price.");
         }
         catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
+        }
+        catch(IOException ex){
             showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
         }
     }
@@ -680,11 +691,16 @@ public class DashboardManager {
             showAlert(Alert.AlertType.ERROR, "Error loading login", ex.getMessage());
         }
         Stage stage = (Stage) logoutButton.getScene().getWindow();
-        stage.setScene(new Scene(loginPage));
+//        stage.setScene(new Scene(loginPage));
+//        stage.setFullScreen(true);
+        Scene scene = new Scene(loginPage);
+        stage.setScene(scene);
         stage.setFullScreen(true);
-
-
     }
+
+
+
+
 
     private void setupZoomTransition(VBox form, ParallelTransition zoomIn, ParallelTransition zoomOut, BooleanProperty isVisible) {
         // Initial state
@@ -729,6 +745,60 @@ public class DashboardManager {
             isVisible.set(false);
         });
     }
+
+ private ImageView createImageView(Event event){
+        ImageView imageview = new ImageView();
+
+       try {
+           imageview.setImage(event.getImage());
+       }catch(Exception ex){
+          System.out.println("couldn't load image!!");
+     }
+     imageview.setFitHeight(208);
+     imageview.setFitWidth(380);
+     //imageview.setPreserveRatio(true);
+     return imageview;
+ }
+
+
+    private void setupPagination() {
+        eventCarousel.setPageFactory(this::createPage);
+
+        // Auto-rotate pages
+        Timeline rotationTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(4), e -> {
+                    int nextPage = (eventCarousel.getCurrentPageIndex() + 1) %
+                            eventCarousel.getPageCount();
+                    eventCarousel.setCurrentPageIndex(nextPage);
+                }
+                ));
+        rotationTimeline.setCycleCount(Timeline.INDEFINITE);
+        rotationTimeline.play();
+    }
+
+    private Node createPage(int pageIndex) {
+        HBox pageContainer = new HBox(10);
+        pageContainer.setAlignment(Pos.CENTER);
+
+        int startIndex = pageIndex ;
+        int endIndex = Math.min(startIndex + 1, prioritizedEvents().size());
+
+        for (int i = startIndex; i < endIndex; i++) {
+            ImageView imageView = createImageView(prioritizedEvents().get(i));
+            pageContainer.getChildren().add(imageView);
+        }
+        return pageContainer;
+    }
+
+    private ArrayList<Event> prioritizedEvents(){
+        return Database.getEventTree().getTopEvents(5);
+    }
+
+
+
+
+
+
     }
 
 

@@ -94,7 +94,7 @@
                   </FlowPane>
                   <StackPane fx:id="carouselContainer" prefHeight="150.0" prefWidth="200.0" styleClass="event-carousel" stylesheets="@../styles.css">
                      <children>
-                        <Pagination fx:id="eventCarousel" pageCount="3" prefHeight="150.0" prefWidth="389.0" styleClass="event-carousel" stylesheets="@../styles.css" StackPane.alignment="CENTER" />
+                        <Pagination fx:id="eventCarousel" currentPageIndex="1" maxPageIndicatorCount="5" pageCount="5" prefHeight="208.0" prefWidth="557.0" styleClass="event-carousel" stylesheets="@../styles.css" StackPane.alignment="CENTER" />
                      </children>
                   </StackPane>
                </children>

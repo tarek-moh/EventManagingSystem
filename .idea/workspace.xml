@@ -4,17 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="">
+    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="implemented logout functionality">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/images/TechtalkEV.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/images/jazzEV.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/images/musicPlaying.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/images/paintingEV2.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/images/paintingWorkshopEV.webp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/CategoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/LoginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/LoginManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/RoomManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Event.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/myCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/myCategory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/PaymentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/util/SplayTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/util/SplayTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" afterDir="false" />
     </list>
@@ -65,6 +68,7 @@
       <recent name="C:\Users\lenovo thinkpad E15\Desktop\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lenovo thinkpad E15\Desktop\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem\images" />
       <recent name="C:\Users\lenovo thinkpad E15\Desktop\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem" />
       <recent name="C:\Users\lenovo thinkpad E15\Desktop\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem\views" />
     </key>
@@ -91,6 +95,15 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="implemented logout functionality">
+      <option name="closed" value="true" />
+      <created>1746782094774</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1746782094774</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -103,6 +116,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge remote-tracking branch 'origin/dashboard' into Profile&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java&#10;#&#9;src/main/java/org/example/eventmanagingsystem/models/Admin.java&#10;#&#9;src/main/java/org/example/eventmanagingsystem/models/Attendee.java&#10;#&#9;src/main/java/org/example/eventmanagingsystem/models/Organizer.java&#10;#&#9;src/main/java/org/example/eventmanagingsystem/models/User.java" />
+    <MESSAGE value="implemented logout functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented logout functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
