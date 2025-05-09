@@ -24,19 +24,23 @@ public class Database{
     private static ArrayList<myCategory> categoryList = new ArrayList<myCategory>();
 
     static {
-        attendeeList.add(new Attendee("Tarek", "password123", LocalDate.of(2002, 4, 20), "Cairo", Gender.MALE));
+        Attendee tarek = new Attendee("Tarek", "attendee", LocalDate.of(2002, 4, 20), "Cairo", Gender.MALE);
+        tarek.getWallet().addFunds(1000);
+        attendeeList.add(tarek);
         attendeeList.add(new Attendee("Sara", "saraPass", LocalDate.of(1998, 12, 5), "Alexandria", Gender.FEMALE));
         attendeeList.add(new Attendee("Omar", "omar321", LocalDate.of(2000, 7, 15), "Giza", Gender.MALE));
         attendeeList.add(new Attendee("Laila", "helloWorld", LocalDate.of(1995, 2, 28), "Tanta", Gender.FEMALE));
         attendeeList.add(new Attendee("Nour", "nour789", LocalDate.of(2003, 11, 3), "Mansoura", Gender.FEMALE));
 
-        adminList.add(new Admin("Tarek", "password123", LocalDate.of(2002, 4, 20), "models.Event Manager", "09-16","Cairo", Gender.MALE));
+
+
+        adminList.add(new Admin("Tarek", "admin", LocalDate.of(2002, 4, 20), "models.Event Manager", "09-16","Cairo", Gender.MALE));
         adminList.add(new Admin("Omar", "adminpass", LocalDate.of(1995, 3, 10), "Venue Coordinator", "08-14", "Cairo", Gender.FEMALE));
         adminList.add(new Admin("Nour", "novelQueen", LocalDate.of(2001, 11, 3), "Tech Supervisor", "10-18", "Cairo", Gender.MALE));
         adminList.add(new Admin("Ahmed", "rootAccess", LocalDate.of(1990, 6, 25), "Operations Lead", "07-15", "Cairo", Gender.FEMALE));
         adminList.add(new Admin("Mona", "admin123", LocalDate.of(1998, 1, 30), "Security Head", "11-20", "Cairo", Gender.FEMALE));
 
-        organizerList.add(new Organizer("Tarek", "password123", LocalDate.of(2002, 4, 20),"Cairo", Gender.MALE));
+        organizerList.add(new Organizer("Tarek", "organizer", LocalDate.of(2002, 4, 20),"Cairo", Gender.MALE));
         organizerList.add(new Organizer("Omar", "organizer456", LocalDate.of(1999, 8, 12), "Cairo", Gender.MALE));
         organizerList.add(new Organizer("Nour", "mysteryBooks", LocalDate.of(2001, 11, 3), "Cairo", Gender.FEMALE));
         organizerList.add(new Organizer("Lina", "eventsPro", LocalDate.of(1997, 2, 27),"Cairo", Gender.FEMALE));
@@ -112,6 +116,22 @@ public class Database{
         }
         return false;
     }
+
+    public static ArrayList<Attendee> getAttendeesByOrganizer(int organizerId) {
+        ArrayList<Attendee> filteredAttendees = new ArrayList<>();
+
+        // Iterate over all events
+        for (Event event : eventTree.inOrderTraversal()) {
+            // Check if the event is organized by the given organizer
+            if (event.getOrganizer().getId() == organizerId) {
+                // Add attendees of this event to the filtered list
+                filteredAttendees.addAll(event.getAttendees());
+            }
+        }
+
+        return filteredAttendees;
+    }
+
 
     // DELETE
     public static boolean deleteAttendee(int id)

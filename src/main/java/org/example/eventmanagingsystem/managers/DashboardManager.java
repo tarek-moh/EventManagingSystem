@@ -5,9 +5,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -15,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -28,7 +28,8 @@ import java.util.ArrayList;
 
 public class DashboardManager {
     /// ***********User logged in reference*********///
-    private User user;
+    private User user ;
+    @FXML private Label usernameLabel;
 
     private static final ObservableList<String> HOURS =
             FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
@@ -40,6 +41,7 @@ public class DashboardManager {
     @FXML private ComboBox<String> eventCategoryField;
     @FXML private Button eventCreateButton;
     @FXML private TextField ticketPriceField;
+    @FXML private HBox eventFormButton;
     // Controller code
     private final ParallelTransition eventZoomIn = new ParallelTransition();
     private final ParallelTransition eventZoomOut = new ParallelTransition();
@@ -50,18 +52,18 @@ public class DashboardManager {
     @FXML private TextField roomCapacityField;
     @FXML private ComboBox<String> roomStartField;
     @FXML private ComboBox<String> roomEndField;
-    @FXML private Button roomCreateButton;
     private final ParallelTransition roomZoomIn = new ParallelTransition();
     private final ParallelTransition roomZoomOut = new ParallelTransition();
     private final BooleanProperty isRoomVisible = new SimpleBooleanProperty(false);
+    @FXML private HBox roomFormButton;
 
     //******************* Category Form *******************//
     @FXML private VBox categoryForm;
     @FXML private TextField categoryNameField;
-    @FXML private Button categoryCreateButton;
     private final ParallelTransition categoryZoomIn = new ParallelTransition();
     private final ParallelTransition categoryZoomOut = new ParallelTransition();
     private final BooleanProperty isCategoryVisible = new SimpleBooleanProperty(false);
+    @FXML private HBox categoryFormButton;
 
     //******************* Attendee Table *******************//
     @FXML private VBox allAttendeesForm;
@@ -75,6 +77,7 @@ public class DashboardManager {
     @FXML private TableColumn<Attendee, String> usernameColumn;
     @FXML private TableColumn<Attendee, String> genderColumn;
     @FXML private TableColumn<Attendee, String> addressColumn;
+    @FXML private HBox viewAttendeesButton;
 
     //*******************Profile View***************************//
     @FXML private ImageView viewProfileButton;
@@ -104,6 +107,7 @@ public class DashboardManager {
     @FXML private TableColumn<Event, String> eventTimeColumn;
     @FXML private TableColumn<Event, String> eventCategoryColumn;
     @FXML private TableColumn<Event, Void> buyTicketColumn;
+    @FXML private HBox viewEventsButton;
 
     //******************* Attendee Table *******************//
     @FXML private VBox allRoomsTable;
@@ -117,7 +121,7 @@ public class DashboardManager {
     @FXML private TableColumn<Room, String> roomCapacityColumn;
     @FXML private ComboBox<String> eventStartField;
     @FXML private ComboBox<String> eventEndField;
-
+    @FXML private HBox viewRoomsButton;
 
     //******************* Balance  *******************//
     @FXML private Label balanceLabel;
@@ -125,6 +129,7 @@ public class DashboardManager {
 
     @FXML
     public void initialize() {
+
         // Set up transitions for all forms
         setupZoomTransition(eventForm, eventZoomIn, eventZoomOut, isEventVisible);
         setupZoomTransition(roomForm, roomZoomIn, roomZoomOut, isRoomVisible);
@@ -173,17 +178,23 @@ public class DashboardManager {
 
         //registerButton.setOnAction(event->handleRegister());
         eventCreateButton.setOnAction(event->handleCreateEvent());
-        // TODO: need to call the butTicket(Event) from the specific Attendee user
+
         buyTicketColumn.setCellFactory(param -> new TableCell<>(){
             private final Button buyButton = new Button("Buy Ticket");
 
             {
                 buyButton.setOnAction(event -> {
-//                    Event eventObj = getTableView().getItems().get(getIndex());
-//                    if((Attendee)currentUser.buyTicket(eventObj))
-//                    {
-//                        showAlert("")
-//                    }
+                    Event eventObj = getTableView().getItems().get(getIndex());
+                    System.out.println(eventObj);
+                    if(((Attendee)user).buyTicket(eventObj))
+                    {
+                        ((Attendee)user).getWallet().deductFunds(eventObj.getTicketPrice());
+                        showAlert(Alert.AlertType.INFORMATION, "Ticket purchased", "Ticket Purchased successfully");
+                    }
+                    else
+                    {
+                        showAlert(Alert.AlertType.ERROR, "purchase failed", "insufficient balance or tickets sold out");
+                    }
                 });
             }
             @Override
@@ -196,16 +207,6 @@ public class DashboardManager {
                 }
             }
         });
-
-        // TODO: needs current user from session inorder to call their respective getBalance
-//        balanceLabel.textProperty().bind(
-//                Bindings.createStringBinding(() -> {
-//                            double bal = currentUser.getWallet().getBalance();
-//                            String color = bal < 0 ? "red" : bal < 50 ? "orange" : "green";
-//                            return String.format("-fx-text-fill: %s; Balance: $%.2f", color, bal);
-//                        },
-//                        currentUser.getWallet().balanceProperty()
-//                );
     }
 
     @FXML
@@ -375,7 +376,7 @@ public class DashboardManager {
         {
             allAttendeesForm.setVisible(true);
             allAttendeesFormZoomIn.play();
-            loadAttendeeTable();
+            loadAttendeeTable(user);
             // Ensure only one form is visible at a time
             if (isEventVisible.get())
                 eventZoomOut.play();
@@ -399,14 +400,22 @@ public class DashboardManager {
 
     }
 
-
-    private void loadAttendeeTable()
-    {
+    // TODO: Needs testing whether a user gets added to the organizer's attendee list if they purchased a ticket for the
+    // organizer's event
+    private void loadAttendeeTable(User currentUser) {
         attendees.clear();
+
         loadAllAttendeesTask = new Task<ArrayList<Attendee>>() {
             @Override
             protected ArrayList<Attendee> call() throws Exception {
-                return Database.getAttendeeList();// Your data access
+                if (currentUser instanceof Admin) {
+                    return Database.getAttendeeList(); // All attendees
+                } else if (currentUser instanceof Organizer) {
+                    Organizer organizer = (Organizer) currentUser;
+                    return Database.getAttendeesByOrganizer(organizer.getId()); // Filtered by organizer
+                } else {
+                    return new ArrayList<>(); // Default empty list
+                }
             }
         };
 
@@ -415,12 +424,8 @@ public class DashboardManager {
                 if (loadAllAttendeesTask.getValue() != null) {
                     attendees.addAll(loadAllAttendeesTask.getValue());
                 }
-
             });
         });
-
-        loadAllAttendeesTask.setOnCancelled(e ->
-        {});
 
         loadAllAttendeesTask.setOnFailed(e -> {
             new Alert(Alert.AlertType.ERROR, "Failed to load attendees").show();
@@ -627,7 +632,11 @@ public class DashboardManager {
     {
 
     }
-    public void assignUserReference(User user){ this.user = user;}
+
+    public void assignUserReference(User user) {
+        this.user = user;
+        setupUserUI();
+    }
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
@@ -683,4 +692,53 @@ public class DashboardManager {
         });
     }
 
+    private void setupUserUI() {
+        StringProperty userNameProperty = new SimpleStringProperty(user.getUserName());
+        usernameLabel.textProperty().bind(userNameProperty);
+
+        if (user instanceof Admin) {
+            // Example: Admin gets full access
+            eventForm.setVisible(true);
+            roomForm.setVisible(true);
+            categoryForm.setVisible(true);
+            allAttendeesForm.setVisible(true);
+            balanceLabel.setVisible(false); // Admin may not need a balance
+            viewAttendeesButton.setVisible(true);
+            viewRoomsButton.setVisible(true);
+
+        }
+        else if (user instanceof Organizer) {
+            eventFormButton.setVisible(true);
+            roomFormButton.setVisible(true);
+            categoryFormButton.setVisible(false);
+            viewEventsButton.setVisible(true);
+            balanceLabel.setVisible(true);
+            viewAttendeesButton.setVisible(true);
+            viewRoomsButton.setVisible(true);
+            bindBalance(((Organizer) user).getWallet().balanceProperty());
+        }
+        else if (user instanceof Attendee) {
+            eventFormButton.setVisible(false);
+            roomFormButton.setVisible(false);
+            categoryFormButton.setVisible(false);
+            viewEventsButton.setVisible(true);
+            balanceLabel.setVisible(true);
+            viewAttendeesButton.setVisible(false);
+            viewRoomsButton.setVisible(false);
+            bindBalance(((Attendee) user).getWallet().balanceProperty());
+        }
+    }
+
+    private void bindBalance(DoubleProperty balanceProperty) {
+        balanceLabel.textProperty().bind(
+                Bindings.createStringBinding(() ->
+                                String.format("$%.1f", balanceProperty.get()),
+                        balanceProperty
+                )
+        );
+    }
+
+    private void bindName(StringProperty nameProperty) {
+        usernameLabel.textProperty().bind(nameProperty);
+    }
 }

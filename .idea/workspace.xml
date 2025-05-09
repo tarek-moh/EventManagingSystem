@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad547d8d-0b23-4037-9d2b-0239e83e9cac" name="Changes" comment="merged some dashboard features and Profile and backend">
+    <list default="true" id="ad547d8d-0b23-4037-9d2b-0239e83e9cac" name="Changes" comment="added ticket price field in event creation form and handled the timeslot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Attendee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Attendee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Wallet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Wallet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/services/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746716361560</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added ticket price field in event creation form and handled the timeslot">
+      <option name="closed" value="true" />
+      <created>1746743481536</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746743481536</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,6 +194,7 @@
     <MESSAGE value="Finish button func" />
     <MESSAGE value="Finish button funcs" />
     <MESSAGE value="merged some dashboard features and Profile and backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged some dashboard features and Profile and backend" />
+    <MESSAGE value="added ticket price field in event creation form and handled the timeslot" />
+    <option name="LAST_COMMIT_MESSAGE" value="added ticket price field in event creation form and handled the timeslot" />
   </component>
 </project>

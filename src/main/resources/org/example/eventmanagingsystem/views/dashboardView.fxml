@@ -30,16 +30,6 @@
                <children>
                   <FlowPane hgap="10.0" prefHeight="453.0" prefWidth="512.0" vgap="10.0">
                      <children>
-                        <HBox fx:id="eventFormButton" alignment="CENTER" onMouseClicked="#toggleEventForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
-                           <children>
-                              <Label prefHeight="52.0" prefWidth="114.0" styleClass="dashboard-text-label" text="Create Event" textAlignment="CENTER" />
-                              <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/calendar-star.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
                         <HBox fx:id="viewEventsButton" alignment="CENTER" onMouseClicked="#toggleAllEvents" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
                            <children>
                               <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="View Events" textAlignment="CENTER" />
@@ -50,12 +40,12 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <HBox fx:id="roomFormButton" alignment="CENTER" onMouseClicked="#toggleRoomForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
+                        <HBox fx:id="viewAttendeesButton" alignment="CENTER" onMouseClicked="#toggleAllAttendeesForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
                            <children>
-                              <Label prefHeight="52.0" prefWidth="114.0" styleClass="dashboard-text-label" text="Create Room" textAlignment="CENTER" />
+                              <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="View Attendees" textAlignment="CENTER" />
                               <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/coworking.png" />
+                                    <Image url="@../images/users-alt.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -70,22 +60,32 @@
                               </ImageView>
                            </children>
                         </HBox>
+                        <HBox fx:id="roomFormButton" alignment="CENTER" onMouseClicked="#toggleRoomForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
+                           <children>
+                              <Label prefHeight="52.0" prefWidth="114.0" styleClass="dashboard-text-label" text="Create Room" textAlignment="CENTER" />
+                              <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/coworking.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="eventFormButton" alignment="CENTER" onMouseClicked="#toggleEventForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
+                           <children>
+                              <Label prefHeight="52.0" prefWidth="114.0" styleClass="dashboard-text-label" text="Create Event" textAlignment="CENTER" />
+                              <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/calendar-star.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
                         <HBox fx:id="categoryFormButton" alignment="CENTER" onMouseClicked="#toggleCategoryForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
                            <children>
                               <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="Create Category" textAlignment="CENTER" />
                               <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/category.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                        <HBox fx:id="viewAttendeesButton" alignment="CENTER" onMouseClicked="#toggleAllAttendeesForm" prefHeight="138.0" prefWidth="222.0" styleClass="dashboard-button" stylesheets="@../styles.css">
-                           <children>
-                              <Label prefHeight="52.0" prefWidth="121.0" styleClass="dashboard-text-label" text="View Attendees" textAlignment="CENTER" />
-                              <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/users-alt.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -107,12 +107,12 @@
          <right>
             <HBox alignment="CENTER_RIGHT" prefHeight="83.0" prefWidth="487.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" prefHeight="34.0" prefWidth="139.0" spacing="10.0" styleClass="username-label">
+                  <HBox alignment="CENTER" prefHeight="37.0" prefWidth="180.0" spacing="10.0" styleClass="glass-button">
                      <padding>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
                      <children>
-                        <Label fx:id="balanceLabel" prefHeight="22.0" prefWidth="63.0" text="balance" textAlignment="CENTER" />
+                        <Label fx:id="balanceLabel" prefHeight="25.0" prefWidth="111.0" text="balance" textAlignment="CENTER" />
                         <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/usd-circle.png" />
@@ -156,7 +156,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="216.0">
                <children>
-                  <Label fx:id="usernameLabel" prefHeight="29.0" prefWidth="76.0" styleClass="username-label" text="Label" />
+                  <Label fx:id="usernameLabel" prefHeight="29.0" prefWidth="76.0" styleClass="glass-button" text="Label" />
                </children>
             </HBox>
          </children>

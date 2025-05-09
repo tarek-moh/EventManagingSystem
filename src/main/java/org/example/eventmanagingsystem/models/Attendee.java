@@ -239,6 +239,10 @@ public class Attendee extends User
         return names;
     }
 
+    public Wallet getWallet() {
+        return wallet;
+    }
+
     @Override
     public String toString()
     {

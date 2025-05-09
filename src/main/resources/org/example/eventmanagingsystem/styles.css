@@ -283,15 +283,33 @@
     -fx-text-fill: white;
 }
 
-/* profilepage */
+/* Profile Page - Modern Glass Effect */
 .dnavyark- {
-    -fx-background-color: #2A384E;
-    -fx-text-fill: white; /* Optional: good for contrast */
+    -fx-background-color: rgba(42, 56, 78, 0.85); /* Original #2A384E with transparency */
+    -fx-background-insets: 0;
+    -fx-border-color: rgba(255, 255, 255, 0.15);
+    -fx-border-width: 1;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.5, 0, 1);
 }
 
 .bg-asueng {
-    -fx-background-color: #2f5fa7;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+    -fx-background-color: rgba(47, 95, 167, 0.8); /* Original #2f5fa7 with transparency */
+    -fx-background-insets: 0;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2),
+                innershadow(gaussian, rgba(255,255,255,0.2), 0, 0, 0, 1);
+}
+
+/* Glass effect overlay */
+.glass-overlay {
+    -fx-background-color: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.05) 0%,
+        rgba(255,255,255,0.01) 100%
+    );
+    -fx-background-insets: 0;
 }
 
 
@@ -350,31 +368,29 @@
     -fx-translate-y:1px;
 }
 
-.username-label {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;  /* Dark blue-gray */
-    -fx-padding: 5 10;
-    -fx-background-color: #f8f9fa;  /* Very light gray */
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
-    -fx-border-color: #dfe6e9;  /* Light gray border */
+/* Shared Glass Button Style - Matches bg-asueng & dnavyark- */
+.glass-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: semi-bold;
+    -fx-text-fill: #ecf0f1; /* Light text color for contrast */
+    -fx-background-color: rgba(255, 255, 255, 0.05); /* Subtle white overlay */
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 6 12;
+    -fx-border-color: rgba(255, 255, 255, 0.15);
     -fx-border-width: 1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0.3, 0, 2),
+                innershadow(gaussian, rgba(255,255,255,0.1), 0, 0, 0, 1);
+    -fx-cursor: hand;
     -fx-alignment: center;
 }
 
-/* Hover effect */
-.username-label:hover {
-    -fx-background-color: #e8f4f8;  /* Lighter blue tint */
-    -fx-text-fill: #2980b9;  /* Blue highlight */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 7, 0, 0, 2);
-}
-
-/* Special state for admin users */
-.username-label.admin {
-    -fx-text-fill: #c0392b;  /* Red for admin */
-    -fx-border-color: #c0392b;
+/* Hover state for glass-button */
+.glass-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0.4, 0, 2);
 }
 
 
