@@ -135,9 +135,16 @@ public class Event implements Comparable<Event> {
         return attendees.size();
     }
 
-
-    public String toString(){
-        return eventID+","+title+", "+description+", "+organizer+", "+category+", "+timeslot+", "+ticketPrice+", "+ attendeesCount()+".";
+    @Override
+    public String toString() {
+        return "Event ID: " + eventID + "\n" +
+                "Title: " + title + "\n" +
+                "Description: " + description + "\n" +
+                "Organizer: " + (organizer != null ? organizer.getUserName() : "Unknown") + "\n" +
+                "Category: " + category + "\n" +
+                "Timeslot: " + timeslot + "\n" +
+                "Ticket Price: $" + ticketPrice + "\n" +
+                "Attendees: " + attendeesCount();
     }
 
     //  getters
@@ -228,6 +235,9 @@ public class Event implements Comparable<Event> {
         }
     }
 
-
+    public void setOrganizer(Organizer org)
+    {
+        this.organizer = org;
+    }
 
 }

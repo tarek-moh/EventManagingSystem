@@ -10,6 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Organizer extends User {
+
     private static int organizerCount = 0;
     private Wallet wallet;
 
@@ -50,7 +51,17 @@ public class Organizer extends User {
 
     // EVENT CRUD
     public void createEvent (Event newEvent) {    Database.getEventTree().insert(newEvent);    }
-                    
+
+    public ArrayList<Event> getMyEvents() {
+        ArrayList<Event> myEvents = new ArrayList<>();
+        for (Event e : Database.getEventList()) {
+            if (e.getOrganizer() != null && e.getOrganizer().equals(this)) {
+                myEvents.add(e);
+            }
+        }
+        return myEvents;
+    }
+
     public Event readEvent (String eventId)
     {
         for (Event event : Database.getEventList())
@@ -169,6 +180,15 @@ public class Organizer extends User {
             }
             System.out.printf("Invalid input! Please enter a value between %d and %d:%n", min, max);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Organizer other = (Organizer) obj;
+        return this.getUserName().equalsIgnoreCase(other.getUserName()) && this.ID == other.ID;
     }
 
 }

@@ -132,6 +132,8 @@ public class DashboardManager {
     @FXML private ComboBox<String> eventEndField;
     @FXML private HBox viewRoomsButton;
     @FXML private HBox viewMyEventsButton;
+    @FXML private ListView<Event> myEventList;
+    @FXML private ObservableList<Event> myEventsObs = FXCollections.observableArrayList();
 
     //******************* Balance  *******************//
     @FXML private Label balanceLabel;
@@ -170,7 +172,7 @@ public class DashboardManager {
     private final ParallelTransition myEventsZoomOut = new ParallelTransition();
     private final BooleanProperty isMyEventsVisible = new SimpleBooleanProperty(false);
     @FXML private VBox myEventsPane;
-    private ObservableList<Ticket> myEvents = FXCollections.observableArrayList();
+    private ObservableList<Event> myEvents = FXCollections.observableArrayList();
     @FXML HBox myEventsButton;
 
 
@@ -339,7 +341,9 @@ public class DashboardManager {
         // timeslot = eventTimeSlotField.getText();
         try {
             double price = Double.parseDouble(tickprice);
-            EventManager.addEvent(title, descrip, categori, timeslot, price);
+
+            Event event = EventManager.addEvent(title, descrip, categori, timeslot, price, (Organizer)user);
+            myEventsObs.add(event);
             showAlert(Alert.AlertType.INFORMATION, "Event created", "Event Created successfully");
         }
         catch (NumberFormatException e) {
@@ -986,9 +990,23 @@ public class DashboardManager {
             viewEventsButton.setVisible(false);
             viewMyEventsButton.setVisible(true);
 
-            //List<Event> myEvents = ((Organizer)user).get;
-            //System.out.println("Ticket count: " + tickets.size()); // debug
-            viewMyEventsButton.setVisible(false);
+
+            List<Event> myEvents = ((Organizer) user).getMyEvents(); // Replace with actual method to get event
+            System.out.println("My Events count: " + myEvents.size()); // debug
+            myEventsObs.addAll(myEvents);
+            myEventList.setItems(myEventsObs);
+
+            myEventList.setCellFactory(param -> new ListCell<Event>() {
+                @Override
+                protected void updateItem(Event item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.toString());
+                    }
+                }
+            });
 
         }
         else if (user instanceof Attendee) {
