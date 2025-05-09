@@ -12,6 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -20,17 +23,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.models.Attendee;
 import org.example.eventmanagingsystem.models.User;
 import org.example.eventmanagingsystem.services.Database;
-import org.example.eventmanagingsystem.models.Attendee;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class DashboardManager {
+
     /// ***********User logged in reference*********///
     private User user;
 
@@ -94,8 +101,6 @@ public class DashboardManager {
     private final ParallelTransition myProfileFormZoomOut = new ParallelTransition();
 
 
-
-
     //******************* Events Table *******************//
     @FXML private VBox allEventsTable;
     @FXML private TableView<Event> eventsTable;
@@ -126,7 +131,10 @@ public class DashboardManager {
 
     //******************* Balance  *******************//
     @FXML private Label balanceLabel;
+    private Stage primaryStage;
 
+    //*****************logout button******************//
+    @FXML private Button logoutButton;
 
     @FXML
     public void initialize() {
@@ -148,11 +156,8 @@ public class DashboardManager {
 
 
         // Additional form-specific setup
-        ArrayList<myCategory> categories = Database.getCategoryList();
-        ArrayList<String> catNames = new ArrayList<>();
-        for(myCategory cat : categories)
-            catNames.add(cat.getName());
-        eventCategoryField.getItems().addAll(catNames);
+        populateCategories(eventCategoryField);
+        populateRooms(roomsTable);
 
         attendees.addAll(Database.getAttendeeList());
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -221,6 +226,7 @@ public class DashboardManager {
         if (isEventVisible.get()) {
             eventZoomOut.play();
         } else {
+            populateCategories(eventCategoryField);
             eventForm.setVisible(true);
             eventZoomIn.play();
             // Ensure only one form is visible at a time
@@ -240,20 +246,41 @@ public class DashboardManager {
             }else if(isAllRoomsVisible.get())
             {
                 allRoomsZoomOut.play();
-                cancelAllRoomsLoading();
+              //  cancelAllRoomsLoading();
             }
             else if (isProfileVisible.get()) {
             myProfileFormZoomOut.play();
             }
         }
     }
+
+    private void populateCategories(ComboBox<String> cats)
+    {
+        cats.getItems().clear();
+        ArrayList<String> names = new ArrayList<String>();
+        for(myCategory cat : Database.getCategoryList())
+            names.add(cat.getName());
+        ObservableList<String> li = FXCollections.observableArrayList(names);
+        cats.setItems(li);
+    }
+
+    private void populateRooms(TableView<Room>roomsTable){
+        roomsTable.getItems().clear();
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        for(Room room : Database.getRoomList()){
+            rooms.add(room);
+        }
+        ObservableList<Room> roomData = FXCollections.observableArrayList(rooms);
+        roomsTable.setItems(roomData);
+    }
+
     @FXML private void handleCreateEvent()
     {
         String title = eventTitleField.getText();
         String descrip = eventDescriptionField.getText();
         String categori = eventCategoryField.getValue();
         String tickprice = eventPriceField.getText();
-        // timelot = eventTimeSlotField.getText();
+        // timeslot = eventTimeSlotField.getText();
         try {
             double price = Double.parseDouble(tickprice);
             EventManager.addEvent(title, descrip, categori, price);
@@ -293,7 +320,7 @@ public class DashboardManager {
             }else if(isAllRoomsVisible.get())
             {
                 allRoomsZoomOut.play();
-                cancelAllRoomsLoading();
+               // cancelAllRoomsLoading();
             }
         }
     }
@@ -302,14 +329,13 @@ public class DashboardManager {
     private void handleCreateRoom()
     {
         String roomCap = roomCapacityField.getText();
-        // String timelot = roomstart and end get()
-
+        // String timeslot = roomstart and end get()
         try
         {
             if (roomCap == null || roomCap.isEmpty())
                 throw new IllegalArgumentException("Capacity cannot be left empty");
             int cap = Integer.parseInt(roomCap);
-            RoomManager.addRoom(cap);
+            RoomManager.createRoom(cap);
         }
         catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "", "Enter a valid number for capacity.");
@@ -350,7 +376,7 @@ public class DashboardManager {
             }else if(isAllRoomsVisible.get())
             {
                 allRoomsZoomOut.play();
-                cancelAllRoomsLoading();
+              //  cancelAllRoomsLoading();
             }
         }
     }
@@ -358,14 +384,17 @@ public class DashboardManager {
     @FXML
     private void handleCreateCategory()
     {
-        String catName = categoryNameField.getText();
-        try{
-            CategoryManager.createCategory(catName);
+        String catgName = categoryNameField.getText();
+        if(CategoryManager.isValid(catgName)) {
+            showAlert(Alert.AlertType.ERROR, "Can't create category","Category already exists!");
         }
-        catch (IllegalArgumentException ex)
-        {
-            showAlert(Alert.AlertType.ERROR, "", ex.getMessage());
-        }
+
+        try {
+            CategoryManager.createCategory(catgName);
+          } catch (IllegalArgumentException ex) {
+            showAlert(Alert.AlertType.ERROR, "couldn't create category", ex.getMessage());
+          }
+
     }
 
     @FXML
@@ -397,7 +426,7 @@ public class DashboardManager {
             }else if(isAllRoomsVisible.get())
             {
                 allRoomsZoomOut.play();
-                cancelAllRoomsLoading();
+                //cancelAllRoomsLoading();
             }
         }
 
@@ -491,18 +520,13 @@ public class DashboardManager {
             }else if(isAllRoomsVisible.get())
             {
                 allRoomsZoomOut.play();
-                cancelAllRoomsLoading();
+                //cancelAllRoomsLoading();
             }
             else if(isAllEventsVisible.get())
             {
                 cancelAllEventsLoading();
                 allEventsZoomOut.play();
-            }else if(isAllRoomsVisible.get())
-            {
-                allRoomsZoomOut.play();
-                cancelAllRoomsLoading();
-            }
-            else if (isProfileVisible.get()) {
+            } else if (isProfileVisible.get()) {
                 myProfileFormZoomOut.play();
             }
         }
@@ -514,47 +538,48 @@ public class DashboardManager {
             loadAllEventsTask.cancel();
     }
 
-    @FXML
-    private void loadAllRooms()
-    {
-        rooms.clear();
-        loadAllRoomsTask = new Task<ArrayList<Room>>() {
-            @Override
-            protected ArrayList<Room> call() throws Exception {
-                return Database.getRoomList();
-            }
-        };
-        loadAllRoomsTask.setOnSucceeded(e -> {
-            Platform.runLater(() -> {
-                if (loadAllRoomsTask.getValue() != null) {
-                    rooms.addAll(loadAllRoomsTask.getValue());
-                }
-            });
-        });
+//    @FXML
+//    private void loadAllRooms()
+//    {
+//        rooms.clear();
+//        loadAllRoomsTask = new Task<ArrayList<Room>>() {
+//            @Override
+//            protected ArrayList<Room> call() throws Exception {
+//                return Database.getRoomList();
+//            }
+//        };
+//        loadAllRoomsTask.setOnSucceeded(e -> {
+//            Platform.runLater(() -> {
+//                if (loadAllRoomsTask.getValue() != null) {
+//                    rooms.addAll(loadAllRoomsTask.getValue());
+//                }
+//            });
+//        });
+//
+//        loadAllRoomsTask.setOnFailed(e -> {
+//            new Alert(Alert.AlertType.ERROR, "Failed to load Rooms").show();
+//        });
+//
+//        new Thread(loadAllRoomsTask).start();
+//    }
 
-        loadAllRoomsTask.setOnFailed(e -> {
-            new Alert(Alert.AlertType.ERROR, "Failed to load Rooms").show();
-        });
-
-        new Thread(loadAllRoomsTask).start();
-    }
-
-    @FXML
-    private void cancelAllRoomsLoading()
-    {
-        if(loadAllRoomsTask!= null && loadAllRoomsTask.isRunning())
-            loadAllRoomsTask.cancel();
-    }
+//    @FXML
+//    private void cancelAllRoomsLoading()
+//    {
+//        if(loadAllRoomsTask!= null && loadAllRoomsTask.isRunning())
+//            loadAllRoomsTask.cancel();
+//    }
 
     @FXML
     private void toggleAllRooms()
     {
-        if(!isAllRoomsVisible.get()) {
-            allRoomsTable.setVisible(true);
-            allRoomsZoomIn.play();
-            loadAllRooms();
+        if(isAllRoomsVisible.get()) {
+            allRoomsZoomOut.play();
         }
         else{
+            populateRooms(roomsTable);
+            allRoomsTable.setVisible(true);
+            allRoomsZoomIn.play();
                 if (isEventVisible.get())
                     eventZoomOut.play();
                 else if (isRoomVisible.get())
@@ -569,7 +594,7 @@ public class DashboardManager {
                     cancelAllEventsLoading();
                 } else if (isAllRoomsVisible.get()) {
                     allRoomsZoomOut.play();
-                    cancelAllRoomsLoading();
+                  //  cancelAllRoomsLoading();
                 } else if (isProfileVisible.get()) {
                     myProfileFormZoomOut.play();
                 }
@@ -611,7 +636,7 @@ public class DashboardManager {
             else
            {
              allRoomsZoomOut.play();
-             cancelAllRoomsLoading();
+            // cancelAllRoomsLoading();
            }
 
         }
@@ -637,9 +662,27 @@ public class DashboardManager {
         alert.setResizable(true);
         alert.showAndWait();
     }
+
+
+
     @FXML
-    private void logout()
-    {
+    private void logout() {
+        Parent loginPage = null;
+        try{
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/eventmanagingsystem/views/loginView.fxml"));
+            loginPage = loader.load();
+            LoginManager loginManager = loader.getController();
+            loginManager.setloginUsernameField(this.user.getUserName());
+            loginManager.setloginPasswordField(this.user.getPassword());
+        }
+        catch(IOException ex){
+            showAlert(Alert.AlertType.ERROR, "Error loading login", ex.getMessage());
+        }
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.setScene(new Scene(loginPage));
+        stage.setFullScreen(true);
+
 
     }
 

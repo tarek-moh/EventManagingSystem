@@ -1,7 +1,6 @@
 package org.example.eventmanagingsystem.models;
 
 import org.example.eventmanagingsystem.services.Database;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -116,7 +115,6 @@ public abstract class User
         this.password = newPassword;
     }
 
-    public LocalDate getDateOfBirth() {   return this.dateOfBirth;    }
 
     public void setDateOfBirth(LocalDate dateOfBirth) throws IllegalArgumentException
     {

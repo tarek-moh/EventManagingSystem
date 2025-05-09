@@ -107,7 +107,7 @@
          <right>
             <HBox alignment="CENTER_RIGHT" prefHeight="83.0" prefWidth="487.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" prefHeight="34.0" prefWidth="139.0" spacing="10.0" styleClass="username-label">
+                  <HBox alignment="CENTER" prefHeight="34.0" prefWidth="139.0" spacing="10.0" styleClass="username-label" stylesheets="@../styles.css">
                      <padding>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
@@ -123,7 +123,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin>
                   </HBox>
-                  <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" onAction="#logout" styleClass="logout-button-glass" text="logout" textAlignment="CENTER" />
+                  <Button fx:id="logoutButton" alignment="CENTER" mnemonicParsing="false" onAction="#logout" styleClass="logout-button-glass" stylesheets="@../styles.css" text="logout" textAlignment="CENTER" />
                </children>
                <padding>
                   <Insets right="20.0" />
@@ -143,7 +143,7 @@
       </BorderPane>
    </top>
    <left>
-      <VBox prefHeight="690.0" prefWidth="236.0" spacing="20.0" styleClass="dnavyark-" stylesheets="@../styles.css" BorderPane.alignment="TOP_CENTER">
+      <VBox prefHeight="690.0" prefWidth="236.0" spacing="20.0" styleClass="dnavyark-" stylesheets="@../styles.css " BorderPane.alignment="TOP_CENTER">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -154,7 +154,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="216.0">
+            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="216.0" styleClass="text-field" stylesheets="@../styles.css">
                <children>
                   <Label fx:id="usernameLabel" prefHeight="29.0" prefWidth="76.0" styleClass="username-label" text="Label" />
                </children>
@@ -229,7 +229,7 @@
                   <Insets left="5.0" right="5.0" />
                </padding>
             </VBox>
-            <VBox fx:id="categoryForm" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="364.0" spacing="10.0" styleClass="form-pane" stylesheets="@../styles.css" visible="false">
+            <VBox fx:id="categoryForm" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="364.0" spacing="10.0" styleClass="form-pane" stylesheets="@../styles.css">
                <children>
                   <Label styleClass="dashboard-text-label" stylesheets="@../styles.css" text="Create Category" />
                   <VBox prefHeight="37.0" prefWidth="351.0" spacing="5.0">
@@ -318,7 +318,7 @@
                   <Insets left="5.0" right="5.0" />
                </padding>
             </VBox>
-            <VBox fx:id="allEventsTable" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="492.0" spacing="10.0" styleClass="form-pane" stylesheets="@../styles.css">
+            <VBox fx:id="allEventsTable" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="492.0" spacing="10.0" styleClass="form-pane" stylesheets="@../styles.css" visible="false">
                <children>
                   <Label styleClass="dashboard-text-label" stylesheets="@../styles.css" text="All Events" />
                   <TableView fx:id="eventsTable" prefHeight="423.0" prefWidth="352.0">

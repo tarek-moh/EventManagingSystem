@@ -13,12 +13,6 @@ public class Organizer extends User {
     private static int organizerCount = 0;
     private Wallet wallet;
 
-    public static void main(String[] args)
-    {
-        Organizer org = new Organizer("Nour", "mysteryBooks", LocalDate.of(2001, 11, 3));
-        org.showDashboard();
-    }
-
     public Organizer() {    super();    }    // No-arg constructor
 
     // Constructor with parameters
