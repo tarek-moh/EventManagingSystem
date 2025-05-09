@@ -22,34 +22,6 @@ public class Organizer extends User {
         this.wallet = new Wallet();
     }
 
-    public void createEvent() {
-
-        while (true) {
-            System.out.println("Enter title of event");
-            String eventTitle = input.nextLine();
-            System.out.println("Enter description of event");
-            String eventDescription = input.nextLine();
-            System.out.println("Enter category name of Event");
-            String eventCategoryName = input.nextLine();
-            System.out.println("Enter time slot of Event");
-            String eventTimeSlot = input.nextLine();
-            System.out.println("Enter ticket price of the Event");
-            double ticketPrice = input.nextDouble();
-            try {
-                Event newEvent = new Event(eventTitle, eventDescription, this, eventCategoryName, eventTimeSlot, ticketPrice);
-                createEvent(newEvent);
-                break;
-            } catch (IllegalArgumentException ex) {
-                System.out.println(ex);
-            } catch (IllegalStateException ex) {
-                System.out.println(ex);
-
-            }
-
-        }
-
-    }
-
 //    private Event readEvent(int eventID) {
 //        input.nextLine(); // Consume newline
 //         Event event = readEvent(eventID);

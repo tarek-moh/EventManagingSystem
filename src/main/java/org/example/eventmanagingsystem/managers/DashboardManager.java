@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -952,7 +953,9 @@ public class DashboardManager {
         });
     }
 
-    public void assignUserReference(User user){ this.user = user; setupUserUI();}
+    public void assignUserReference(User user) {
+        this.user = user;
+        setupUserUI();}
     private void setupUserUI() {
         StringProperty userNameProperty = new SimpleStringProperty(user.getUserName());
         bindName(userNameProperty);
@@ -998,9 +1001,9 @@ public class DashboardManager {
             viewRoomsButton.setVisible(false);
             bindBalance(((Attendee) user).getWallet().balanceProperty());
             manageInterestsButton.setVisible(true);
-            loadInterests((Attendee)user);
+            loadInterests((Attendee) user);
 
-            List<Ticket> tickets = ((Attendee)user).getMyTickets();
+            List<Ticket> tickets = ((Attendee) user).getMyTickets();
             System.out.println("Ticket count: " + tickets.size()); // debug
             viewMyEventsButton.setVisible(false);
 
@@ -1018,10 +1021,10 @@ public class DashboardManager {
                     }
                 }
             });
-            }
         }
+    }
 
- private ImageView createImageView(Event event){
+    private ImageView createImageView(Event event){
         ImageView imageview = new ImageView();
 
        try {

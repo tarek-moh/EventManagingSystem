@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11942811-b1e1-4f46-990d-ff421473a3ae" name="Changes" comment="completed Dashboard features with no testing">
+    <list default="true" id="11942811-b1e1-4f46-990d-ff421473a3ae" name="Changes" comment="created a view for my events form for the organizer.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/LoginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/LoginManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/loginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/loginView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +16,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "git-widget-placeholder": "dashboard",
+    "last_opened_file_path": "C:/Users/tarek/IdeaProjects/EventManagingSystem/src/main/resources/org/example/eventmanagingsystem/images"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tarek\IdeaProjects\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem\images" />
@@ -51,7 +57,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746804594197</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="created a view for my events form for the organizer.">
+      <option name="closed" value="true" />
+      <created>1746812400974</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746812400974</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -68,6 +82,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add file network basics" />
     <MESSAGE value="completed Dashboard features with no testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="completed Dashboard features with no testing" />
+    <MESSAGE value="created a view for my events form for the organizer." />
+    <option name="LAST_COMMIT_MESSAGE" value="created a view for my events form for the organizer." />
   </component>
 </project>
