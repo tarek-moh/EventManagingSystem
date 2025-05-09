@@ -101,7 +101,7 @@ public class Event implements Comparable<Event> {
 
     public Ticket generateTicket(){   //add payment logic here ig !!
         int newTicketId=soldTickets.size()+1;
-        Ticket ticket=new Ticket(newTicketId,ticketPrice,this.title);
+        Ticket ticket=new Ticket(newTicketId,ticketPrice,this.title, String.valueOf(room.getRoomID()), timeslot);
         soldTickets.add(ticket);
         return ticket;
     }

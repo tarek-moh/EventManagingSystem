@@ -1,5 +1,6 @@
 package org.example.eventmanagingsystem.models;
 
+import org.example.eventmanagingsystem.managers.CategoryManager;
 import org.example.eventmanagingsystem.managers.EventManager;
 import org.example.eventmanagingsystem.services.Database;
 import org.example.eventmanagingsystem.services.PaymentService;
@@ -125,21 +126,31 @@ public class Attendee extends User
         this.address = address.trim();
     }
 
-    public boolean buyTicket(Event e){
-        if (e.isAvailable()){
-            if(!PaymentService.transferFunds(wallet, e.getOrganizer().getWallet(), e.getTicketPrice()))
-            {
-                return false;
-            }
+    public boolean buyTicket(Event e) {
+        if (!e.isAvailable()) {
+            return false;
+        }
+
+        double ticketPrice = e.getTicketPrice();
+        if (ticketPrice < 1e-9) {
             Ticket ticket = e.generateTicket();
             ticketList.add(ticket);
             e.addAttendee(this);
             return true;
         }
-        else{
+
+        boolean paid = PaymentService.transferFunds(wallet, e.getOrganizer().getWallet(), ticketPrice);
+        if (!paid) {
             return false;
         }
+
+        Ticket ticket = e.generateTicket();
+        System.out.println(ticket);
+        ticketList.add(ticket);
+        e.addAttendee(this);
+        return true;
     }
+
 
     public void viewMyTickets()
     {
@@ -172,6 +183,16 @@ public class Attendee extends User
 
     public void setInterests(ArrayList<myCategory> interests) {
         this.interestList = interests;
+    }
+
+    public void addInterest(String interest)
+    {
+        this.interestList.add(CategoryManager.findCategory(interest));
+    }
+
+    public void removeInterest(String interest)
+    {
+        this.interestList.remove(CategoryManager.findCategory(interest));
     }
 
     public static int getAttendeeCount() {    return attendeeCount;    }

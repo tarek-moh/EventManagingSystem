@@ -23,4 +23,14 @@ public class CategoryManager {
         System.out.println("Category created successfully");
     }
 
+    public static myCategory findCategory(String category)
+    {
+
+        for(myCategory cat : Database.getCategoryList())
+        {
+            if(category.equals(cat.getName()))
+                return cat;
+        }
+        return null;
+    }
 }

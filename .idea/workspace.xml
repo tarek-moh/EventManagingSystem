@@ -86,20 +86,18 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "git-widget-placeholder": "dashboard"
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Profile",
-    "last_opened_file_path": "C:/Users/lenovo thinkpad E15/Desktop/EventManagingSystem/src/main/resources/org/example/eventmanagingsystem",
-    "two.files.diff.last.used.file": "C:/Users/lenovo thinkpad E15/Desktop/dashboardView.fxml"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <option name="keyToString">
+      <map>
+        <entry key="Application.Main.executor" value="Run" />
+        <entry key="git-widget-placeholder" value="Profile" />
+        <entry key="RunOnceActivity.ShowReadmeOnStart" value="true" />
+        <entry key="RunOnceActivity.git.unshallow" value="true" />
+        <entry key="last_opened_file_path" value="C:/YourPath/..." />
+        <entry key="two.files.diff.last.used.file" value="C:/YourPath/..." />
+      </map>
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\omaro\IdeaProjects\EventManagingSystem\src\main\java\org\example\eventmanagingsystem\services" />

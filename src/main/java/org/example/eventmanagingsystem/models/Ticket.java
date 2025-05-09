@@ -20,15 +20,27 @@ public class Ticket {
     private int ticketID;
     private double price;
     private String eventTitle;
+    private String roomId;
+    private String timeslot;
 
     //constructor
-    public Ticket(int ticketID,double price,String eventTitle){
+    public Ticket(int ticketID,double price,String eventTitle, String roomId, String timeslot){
         this.ticketID=ticketID;
         this.price=price;
         this.eventTitle=eventTitle;
+        this.roomId = roomId;
+        this.timeslot = timeslot;
     }
     public String showTicketDetsils(){ //gonna change for GUI ig !!
         return "models.Ticket ID : "+this.ticketID+", models.Event : " +eventTitle+", Price : "+this.price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "🎟 Ticket: %s\nEvent: %s\nRoom: %s\nTime: %s\nPrice: $%.2f",
+                ticketID, eventTitle, roomId, timeslot, price
+        );
     }
 }
 

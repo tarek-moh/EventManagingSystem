@@ -12,27 +12,27 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.Pair;
 import org.example.eventmanagingsystem.models.*;
 import org.example.eventmanagingsystem.models.Attendee;
 import org.example.eventmanagingsystem.models.User;
 import org.example.eventmanagingsystem.services.Database;
-
+import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class DashboardManager {
@@ -138,6 +138,24 @@ public class DashboardManager {
     //*****************logout button******************//
     @FXML private Button logoutButton;
 
+    //*****************Manage Interests******************//
+    @FXML private HBox manageInterestsButton;
+    @FXML private ComboBox<String> interestComboBox;
+    @FXML private VBox interestsPane;
+    @FXML private VBox selectedInterestsPane;
+    private Set<String> selectedInterests = new HashSet<>();
+    private final ParallelTransition interestsZoomIn = new ParallelTransition();
+    private final ParallelTransition interestsZoomOut = new ParallelTransition();
+    private final BooleanProperty isInterestsVisible = new SimpleBooleanProperty(false);
+
+    //*****************My Tickets******************//
+    @FXML ListView<Ticket> ticketsListView;
+    private final ParallelTransition ticketsZoomIn = new ParallelTransition();
+    private final ParallelTransition ticketsZoomOut = new ParallelTransition();
+    private final BooleanProperty isTicketsVisible = new SimpleBooleanProperty(false);
+    @FXML private VBox ticketsPane;
+    private ObservableList<Ticket> myTickets = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
 
@@ -147,9 +165,10 @@ public class DashboardManager {
         setupZoomTransition(categoryForm, categoryZoomIn, categoryZoomOut, isCategoryVisible);
         setupZoomTransition(allAttendeesForm, allAttendeesFormZoomIn, allAttendeesFormZoomOut, isAllAttendeesFormVisible);
         setupZoomTransition(profileForm, myProfileFormZoomIn, myProfileFormZoomOut, isProfileVisible);
-
         setupZoomTransition(allEventsTable, allEventsZoomIn, allEventsZoomOut, isAllEventsVisible);
         setupZoomTransition(allRoomsTable, allRoomsZoomIn, allRoomsZoomOut, isAllRoomsVisible);
+        setupZoomTransition(interestsPane, interestsZoomIn, interestsZoomOut, isInterestsVisible);
+        setupZoomTransition(ticketsPane, ticketsZoomIn, ticketsZoomOut, isTicketsVisible);
 
         // populate combo boxes
         eventStartField.setItems(HOURS);
@@ -165,8 +184,10 @@ public class DashboardManager {
             catNames.add(cat.getName());
         eventCategoryField.getItems().addAll(catNames);
 
+
         populateCategories(eventCategoryField);
         populateRooms(roomsTable);
+        interestComboBox.getItems().addAll(catNames);
 
         attendees.addAll(Database.getAttendeeList());
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -176,7 +197,6 @@ public class DashboardManager {
         genderColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getGender().toString()));
         attendeeTable.setItems(attendees);
-
 
         events.addAll(Database.getEventList());
         eventTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -203,6 +223,8 @@ public class DashboardManager {
                     if(((Attendee)user).buyTicket(eventObj))
                     {
                         ((Attendee)user).getWallet().deductFunds(eventObj.getTicketPrice());
+                        myTickets.clear();
+                        myTickets.addAll(((Attendee)user).getMyTickets());
                         showAlert(Alert.AlertType.INFORMATION, "Ticket purchased", "Ticket Purchased successfully");
                     }
                     else
@@ -232,7 +254,8 @@ public class DashboardManager {
 //                        },
 //                        currentUser.getWallet().balanceProperty()
 //                );
-   // }
+// }
+
     @FXML
     private void toggleEventForm() {
         if (isEventVisible.get()) {
@@ -555,6 +578,14 @@ public class DashboardManager {
             else if (isProfileVisible.get()) {
                 myProfileFormZoomOut.play();
             }
+            else if(isInterestsVisible.get())
+            {
+                interestsZoomOut.play();
+            }
+            else if(isTicketsVisible.get())
+            {
+                ticketsZoomOut.play();
+            }
         }
     }
 
@@ -603,12 +634,10 @@ public class DashboardManager {
             allRoomsZoomOut.play();
         }
         else{
-//            populateRooms(roomsTable);
-//            allRoomsTable.setVisible(true);
-//            allRoomsZoomIn.play();
-//            loadAllRooms();
-//        }
-//        else{
+            populateRooms(roomsTable);
+            allRoomsTable.setVisible(true);
+            allRoomsZoomIn.play();
+            //loadAllRooms();
                 if (isEventVisible.get())
                     eventZoomOut.play();
                 else if (isRoomVisible.get())
@@ -662,12 +691,109 @@ public class DashboardManager {
             allEventsZoomOut.play();
             cancelAllEventsLoading();
             }
+            else if(isInterestsVisible.get())
+            {
+                isInterestsVisible.set(false);
+            }
             else
            {
              allRoomsZoomOut.play();
             // cancelAllRoomsLoading();
            }
 
+        }
+    }
+
+    @FXML
+    private void toggleInterests() {
+        if (isInterestsVisible.get()) {
+            interestsZoomOut.play();
+        } else {
+            // Populate or load the interests UI if needed
+            //populateInterests(); // optional
+            interestsPane.setVisible(true);
+            interestsZoomIn.play();
+
+            // Hide other views
+            if (isEventVisible.get())
+                eventZoomOut.play();
+            else if (isRoomVisible.get())
+                roomZoomOut.play();
+            else if (isCategoryVisible.get())
+                categoryZoomOut.play();
+            else if (isAllAttendeesFormVisible.get()) {
+                allAttendeesFormZoomOut.play();
+                cancelAllAttendeesLoading();
+            } else if (isAllEventsVisible.get()) {
+                allEventsZoomOut.play();
+                cancelAllEventsLoading();
+            } else if (isAllRoomsVisible.get()) {
+                allRoomsZoomOut.play();
+                //cancelAllRoomsLoading();
+            } else if (isProfileVisible.get()) {
+                myProfileFormZoomOut.play();
+            }
+            else if(isTicketsVisible.get())
+            {
+                ticketsZoomOut.play();
+            }
+        }
+    }
+    @FXML
+    private void toggleTickets() {
+        if (isTicketsVisible.get()) {
+            ticketsZoomOut.play();
+        } else {
+            ticketsPane.setVisible(true);
+            ticketsZoomIn.play();
+
+            // Hide other views
+            if (isEventVisible.get())
+                eventZoomOut.play();
+            else if (isRoomVisible.get())
+                roomZoomOut.play();
+            else if (isCategoryVisible.get())
+                categoryZoomOut.play();
+            else if (isAllAttendeesFormVisible.get()) {
+                allAttendeesFormZoomOut.play();
+                cancelAllAttendeesLoading();
+            } else if (isAllEventsVisible.get()) {
+                allEventsZoomOut.play();
+                cancelAllEventsLoading();
+            } else if (isAllRoomsVisible.get()) {
+                allRoomsZoomOut.play();
+                //cancelAllRoomsLoading();
+            } else if (isProfileVisible.get()) {
+                myProfileFormZoomOut.play();
+            } else if (isInterestsVisible.get()) {
+                interestsZoomOut.play();
+            }
+        }
+    }
+
+    private void loadInterests(Attendee attendee) {
+        selectedInterestsPane.getChildren().clear();
+
+        for (myCategory interest : attendee.getInterests()) {
+            Label nameLabel = new Label(interest.getName());
+            Button removeButton = new Button("❌");
+
+            // Optional: Add styling
+            nameLabel.setStyle("-fx-font-size: 14px;");
+            removeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: red;");
+
+            // Action to remove interest (implement this logic)
+            removeButton.setOnAction(e -> {
+                attendee.getInterests().remove(interest);  // remove from model
+                loadInterests(attendee);  // reload the list
+                // Optionally call backend here to persist the removal
+            });
+
+            HBox item = new HBox(10, nameLabel, removeButton);
+            item.setAlignment(Pos.CENTER_LEFT);
+            item.setStyle("-fx-padding: 5px; -fx-background-color: #f0f0f0; -fx-background-radius: 5px;");
+
+            interestsPane.getChildren().add(item);
         }
     }
 
@@ -705,7 +831,6 @@ public class DashboardManager {
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.setScene(new Scene(loginPage));
         stage.setFullScreen(true);
-
 
     }
 
@@ -752,10 +877,10 @@ public class DashboardManager {
             isVisible.set(false);
         });
     }
-
+    public void assignUserReference(User user){ this.user = user; setupUserUI();}
     private void setupUserUI() {
         StringProperty userNameProperty = new SimpleStringProperty(user.getUserName());
-        usernameLabel.textProperty().bind(userNameProperty);
+        bindName(userNameProperty);
 
         if (user instanceof Admin) {
             // Example: Admin gets full access
@@ -766,7 +891,7 @@ public class DashboardManager {
             balanceLabel.setVisible(false); // Admin may not need a balance
             viewAttendeesButton.setVisible(true);
             viewRoomsButton.setVisible(true);
-
+            manageInterestsButton.setVisible(false);
         }
         else if (user instanceof Organizer) {
             eventFormButton.setVisible(true);
@@ -777,6 +902,7 @@ public class DashboardManager {
             viewAttendeesButton.setVisible(true);
             viewRoomsButton.setVisible(true);
             bindBalance(((Organizer) user).getWallet().balanceProperty());
+            manageInterestsButton.setVisible(false);
         }
         else if (user instanceof Attendee) {
             eventFormButton.setVisible(false);
@@ -787,6 +913,25 @@ public class DashboardManager {
             viewAttendeesButton.setVisible(false);
             viewRoomsButton.setVisible(false);
             bindBalance(((Attendee) user).getWallet().balanceProperty());
+            manageInterestsButton.setVisible(true);
+            loadInterests((Attendee)user);
+            List<Ticket> tickets = ((Attendee)user).getMyTickets();
+            System.out.println("Ticket count: " + tickets.size()); // debug
+
+            myTickets.addAll(tickets);
+            ticketsListView.setItems(myTickets);
+            ticketsListView.setCellFactory(param -> new ListCell<Ticket>() {
+                @Override
+                protected void updateItem(Ticket item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.toString());  // Customize the string format here
+                    }
+                }
+            });
+
         }
     }
 
@@ -802,4 +947,42 @@ public class DashboardManager {
     private void bindName(StringProperty nameProperty) {
         usernameLabel.textProperty().bind(nameProperty);
     }
+
+    @FXML
+    private void onAddInterest() {
+        String selected = interestComboBox.getValue();
+        if (selected != null && !selectedInterests.contains(selected)) {
+            selectedInterests.add(selected);
+            addInterestChip(selected);
+            ((Attendee)user).addInterest(selected);
+        }
+        for(myCategory cat : ((Attendee)user).getInterests())
+        {
+            System.out.println(cat);
+        }
+    }
+
+    private void addInterestChip(String interest) {
+        Label label = new Label(interest);
+        Button removeButton = new Button("❌");
+
+        removeButton.setOnAction(e -> {
+            ((Attendee) user).removeInterest(interest);
+            selectedInterests.remove(interest);
+            selectedInterestsPane.getChildren().remove(removeButton.getParent());
+        });
+
+        // Spacer to push the ❌ to the right
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox chip = new HBox(10, label, spacer, removeButton);
+        chip.setStyle("-fx-padding: 5; -fx-background-color: #e0e0e0; -fx-background-radius: 5;");
+        chip.setAlignment(Pos.CENTER_LEFT);
+
+        selectedInterestsPane.getChildren().add(chip);
+        VBox.setMargin(chip, new Insets(0, 0, 10, 0));
+    }
+
+
 }
