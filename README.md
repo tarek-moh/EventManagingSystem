@@ -18,11 +18,11 @@ A full-featured **desktop application** for managing events, attendees, and tick
 
 ## 🖼️ Screenshots
 
-### 🧩 Attendee Dashboard
-![Main Dashboard](images/dashboard.png)
+### 🧩 Admin Dashboard
+![Main Dashboard](images/admin-dashboard.png)
 
 ### 📋 Event Creation (Organizer's dashboard)
-![Event Creation](images/create-event.png)
+![Event Creation](images/event-create.png)
 
 ### 🎟️ Ticket purchase
 ![Tickets](images/tickets.png)
