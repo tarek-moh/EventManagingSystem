@@ -57,4 +57,14 @@ public class RoomManager {
 
         }
     }
+
+    public static void createRoom(int newRoomCapacity) throws IllegalArgumentException
+    {
+        Room r = new Room();
+        r.setCapacity(newRoomCapacity);
+        // r.set price
+
+        Database.addRoom(r);
+        System.out.println("Room added successfully");
+    }
 }

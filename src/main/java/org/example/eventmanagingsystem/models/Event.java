@@ -7,9 +7,14 @@ import org.example.eventmanagingsystem.managers.CategoryManager;
 import org.example.eventmanagingsystem.managers.RoomManager;
 import org.example.eventmanagingsystem.services.Database;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import javafx.scene.image.Image;
+import java.io.File;
+
 /**
  * The {@code models.Event} class represents an event that can be booked and attended.
  * It includes attributes such as title, description, category, time slot, and associated room.
@@ -30,7 +35,8 @@ import java.util.Date;
  *
  * @author Nour
  */
-public class Event {
+public class Event implements Comparable<Event> {
+
     //attributes
     private static int evCounter = 1000;
     private String eventID;
@@ -38,18 +44,29 @@ public class Event {
     private String title;
     private String description;
     private Organizer organizer;
-    private final String category;
+    private String category;
     private String timeslot;
     private Room room;
     private ArrayList <Ticket> soldTickets;
     private ArrayList<Attendee> attendees;
+    private Image image;
+
+
+
+    public Event(){
+        this.eventID =generateEventID();//patterned id ex: EVT202504201000
+        soldTickets=new ArrayList<>();
+        attendees=new ArrayList<>();
+        setDefaultImage();
+    }
 
     //constructor
-    public Event(String title, String description, Organizer organizer, String category, String timeslot, double ticketPrice){
+    public Event(String title, String description, Organizer organizer, String category, String timeslot, double ticketPrice, File imageFile){
         this.eventID =generateEventID();//patterned id ex: EVT202504201000
         this.title = title;
         this.description = description;
         this.organizer = organizer;
+
         if(CategoryManager.isValid(category))
         {
             this.category = category;
@@ -65,6 +82,22 @@ public class Event {
         soldTickets=new ArrayList<>();
         attendees=new ArrayList<>();
         this.ticketPrice = ticketPrice;
+        setImage(imageFile);
+    }
+
+    @Override
+    public int compareTo(Event other) {
+        int priorityCompare = Integer.compare(this.priorityScore(), other.priorityScore());
+        if (priorityCompare != 0) {
+            return priorityCompare;
+        }
+        // Use title as tie-breaker to ensure unique ordering
+        return this.title.compareTo(other.title);
+    }
+
+    private int priorityScore()
+    {
+        return soldTickets.size();
     }
 
     //methods
@@ -79,7 +112,7 @@ public class Event {
 
     public Ticket generateTicket(){   //add payment logic here ig !!
         int newTicketId=soldTickets.size()+1;
-        Ticket ticket=new Ticket(newTicketId,ticketPrice,this.title);
+        Ticket ticket=new Ticket(newTicketId,ticketPrice,this.title, String.valueOf(room.getRoomID()), timeslot);
         soldTickets.add(ticket);
         return ticket;
     }
@@ -102,27 +135,16 @@ public class Event {
         return attendees.size();
     }
 
-    public void showEventDetails(){
-       //ig it's gonna change when implementing the GUI!!
-        System.out.println("Event ID: " + eventID);
-        System.out.println("Title: " + title);
-        System.out.println("Description: " + description);
-        System.out.println("Organizer: "+ organizer.getUserName());
-        System.out.println("Category: " + category);
-        System.out.println("Time Slot: " + timeslot);
-        System.out.println("Ticket Price: " + ticketPrice + " EGP");
-        System.out.println("Total Attendees Registered:"+ attendeesCount());
-
-    }
-    public void showEventAttendees(){
-        System.out.println("List of attendees:");
-        for(int i=0;i<attendees.size();i++) {
-            System.out.println(attendees.get(i));
-        }
-    }
-
-    public String toString(){
-        return eventID+","+title+", "+description+", "+organizer+", "+category+", "+timeslot+", "+ticketPrice+", "+ attendeesCount()+".";
+    @Override
+    public String toString() {
+        return "Event ID: " + eventID + "\n" +
+                "Title: " + title + "\n" +
+                "Description: " + description + "\n" +
+                "Organizer: " + (organizer != null ? organizer.getUserName() : "Unknown") + "\n" +
+                "Category: " + category + "\n" +
+                "Timeslot: " + timeslot + "\n" +
+                "Ticket Price: $" + ticketPrice + "\n" +
+                "Attendees: " + attendeesCount();
     }
 
     //  getters
@@ -130,18 +152,35 @@ public class Event {
     public String getCategory() { return category; }  // No setter - final field
     public String getDescription() { return description; }
     public String getTimeslot() { return timeslot; }
+    public Image getImage() {return image;}
 
     // setters with validation
     public void setTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty");
         }
+        if (title.length() < 3 || title.length() > 20)
+        {  throw new IllegalArgumentException("Title must be between 3 and 20 characters.");  }
+
+        for(Event e : Database.getEventList())
+        {
+            if(e.getTitle().equals(this.title))
+            {  throw new IllegalArgumentException("Title is already taken");  }
+        }
+
         this.title = title.trim();
     }
 
     public void setDescription(String description) {
-        this.description = (description != null) ? description.trim() : null;
+        if (description == null || description.trim().isEmpty())
+        {  throw new IllegalArgumentException("Description cannot be null or empty");  }
+
+        if (description.length() < 10 )
+        {  throw new IllegalArgumentException("Description must be at least 10 characters");  }
+
+        this.description = description;
     }
+
 
     public void setTimeslot(String timeslot) {
         if (timeslot == null || !timeslot.matches("^\\d{2}:\\d{2}-\\d{2}:\\d{2}$")) {
@@ -157,6 +196,13 @@ public class Event {
         this.ticketPrice = price;
     }
 
+    public void setCategory(String category1) throws IllegalArgumentException
+    {
+        if (category1 == null)
+            throw new IllegalArgumentException("You must choose a category");
+        this.category = category1;
+    }
+
     public void setRoom(Room room) {
         this.room = room;  // Optional: Add validation if needed
     }
@@ -167,6 +213,31 @@ public class Event {
                 attendees.remove(i);
                 Database.deleteAttendee(a.ID);}
         }
+    }
+
+
+    private void setDefaultImage(){
+        try {
+            this.image = new Image(getClass().getResourceAsStream("src/main/resources/org/example/eventmanagingsystem/images/musicPlaying.jpg"));
+        }catch (Exception ex){
+            System.err.println("Failed to load default event image: " + ex.getMessage());
+            this.image = null;
+        }
+    }
+
+
+    private void setImage(File imageFile){
+        if (imageFile != null && imageFile.exists()){
+            this.image = new Image(imageFile.toURI().toString());
+        }
+        else {
+            setDefaultImage();
+        }
+    }
+
+    public void setOrganizer(Organizer org)
+    {
+        this.organizer = org;
     }
 
 }

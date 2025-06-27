@@ -9,7 +9,7 @@ import org.example.eventmanagingsystem.services.Database;
  * <p>
  * It provides methods to add events and retrieve all events associated
  * with this category.
- *
+
  * Example usage:
  * <pre>
  *     Category musicCategory = new Category("Music");
@@ -23,6 +23,8 @@ public class myCategory {
     private String name;
 
     //constructor
+    public myCategory(){}
+
     public myCategory(String name){
         this.name=name;
     }
@@ -43,8 +45,22 @@ public class myCategory {
         return count;
     }
 
-    public String getName(){ //notice i didn't add it to the UML diagram
-        return name;
+    public String getName(){ //notice I didn't add it to the UML diagram
+        return this.name;
+    }
+
+    public void setName(String newName) throws IllegalArgumentException
+    {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Category name cannot be null or empty.");
+
+        }
+        for (myCategory cat : Database.getCategoryList()) {
+            if (cat.getName().equalsIgnoreCase(newName.trim())) {
+                throw new IllegalArgumentException("Category name is already made");
+            }
+        }
+        this.name = newName;
     }
 
     public String toString(){

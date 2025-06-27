@@ -4,80 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="Basic dashboard for all users. Added the chat files not complete">
+    <list default="true" id="11942811-b1e1-4f46-990d-ff421473a3ae" name="Changes" comment="merged Profile and dashboard">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/eventmanagingsystem/views/dashboardView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/DashboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/managers/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/eventmanagingsystem/models/Organizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;tarek-moh&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/tarek-moh/EventManagingSystem&quot;,
-    &quot;accountId&quot;: &quot;aba872a0-a7d9-4d8c-9359-11206f9ad140&quot;
-  }
-}</component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
-}</component>
-  <component name="ProjectId" id="2weJQ7c07HONSw2DkEyvDDRCM1Q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectViewState">
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "NetworkBasics",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/omaro/IdeaProjects/EventManagingSystem/src/main/java/org/example/eventmanagingsystem/services",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-    "vue.rearranger.settings.migration": "true"
+    "git-widget-placeholder": "dashboard",
+    "last_opened_file_path": "C:/Users/tarek/IdeaProjects/EventManagingSystem/src/main/resources/org/example/eventmanagingsystem/images"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\omaro\IdeaProjects\EventManagingSystem\src\main\java\org\example\eventmanagingsystem\services" />
-      <recent name="C:\Users\pc\IdeaProjects\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem" />
-      <recent name="C:\Users\pc\IdeaProjects\EventManagingSystem\src\main\java\org\example\eventmanagingsystem" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\tarek\IdeaProjects\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem\images" />
-      <recent name="C:\Users\tarek\IdeaProjects\EventManagingSystem\src\main\resources\org\example\eventmanagingsystem\views" />
-      <recent name="C:\Users\tarek\IdeaProjects\EventManagingSystem\src\main\java\org\example\eventmanagingsystem\managers" />
     </key>
   </component>
   <component name="RunManager">
@@ -97,48 +46,53 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="46505d15-7928-4e3b-b2ad-7a2f1bd4fbe6" name="Changes" comment="" />
-      <created>1746396089344</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1746396089344</updated>
-      <workItem from="1746396090323" duration="609000" />
-    </task>
-    <task id="LOCAL-00001" summary="Refactored">
+    <task id="LOCAL-00001" summary="completed Dashboard features with no testing">
       <option name="closed" value="true" />
-      <created>1746397893208</created>
+      <created>1746804594197</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1746397893208</updated>
+      <updated>1746804594197</updated>
     </task>
-    <task id="LOCAL-00002" summary="Basic files for creating profile">
+    <task id="LOCAL-00002" summary="created a view for my events form for the organizer.">
       <option name="closed" value="true" />
-      <created>1746448803191</created>
+      <created>1746812400974</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1746448803191</updated>
+      <updated>1746812400974</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="merged Profile and dashboard">
+      <option name="closed" value="true" />
+      <created>1746813669101</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746813669101</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactored" />
-    <MESSAGE value="Basic files for creating profile" />
-    <MESSAGE value="basic structure for adding network basics" />
-    <MESSAGE value="Basic dashboard for all users. Added the chat files not complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic dashboard for all users. Added the chat files not complete" />
+    <MESSAGE value="add file network basics" />
+    <MESSAGE value="completed Dashboard features with no testing" />
+    <MESSAGE value="created a view for my events form for the organizer." />
+    <MESSAGE value="merged Profile and dashboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="merged Profile and dashboard" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 package org.example.eventmanagingsystem.models;
 
+import org.example.eventmanagingsystem.managers.CategoryManager;
 import org.example.eventmanagingsystem.managers.EventManager;
 import org.example.eventmanagingsystem.services.Database;
 import org.example.eventmanagingsystem.services.PaymentService;
@@ -13,105 +14,25 @@ public class Attendee extends User
     Scanner input = new Scanner(System.in);
 
     private static int attendeeCount = 0;
-    private String address;
-    private Gender gender;
     private Wallet wallet;
     private ArrayList<myCategory> interestList;
     private ArrayList<Ticket> ticketList;
 
-    public static void main(String[] args)
-    {
-        Attendee attendee = new Attendee("Tarek", "password123", LocalDate.of(2002, 4, 20), "Cairo", Gender.MALE);
-        attendee.showDashboard();
-    }
 
     public Attendee() {    super();     } // no-arg-constructor
 
     // parameterized constructor
     public Attendee(String userName, String password, LocalDate dateOfBirth, String address, Gender gender) 
     {
-        super(userName, password, dateOfBirth);
+        super(userName, password, dateOfBirth, address, gender);
         this.ID = 10000 + attendeeCount;
-        this.address = address;
-        this.gender = gender;
          this.wallet = new Wallet();
          this.ticketList = new ArrayList<Ticket>();
          this.interestList = new ArrayList<myCategory>();
         attendeeCount++;
     }
 
-    @Override
-    public void showDashboard() {
-        while (true) {
-            displayMainMenu();
-            short choice = getValidChoice(1, 7);
-
-            switch (choice) {
-                case 1:
-                    EventManager.showAllEvents();
-                    break;
-
-                case 2:
-                    viewMyTickets();
-                    break;
-
-                case 3:
-                    while(true) {
-                        System.out.println("Enter event title: (done to exit)");
-                        String title = input.nextLine();
-                        if(title.equalsIgnoreCase("done"))
-                            break;
-                        Event ev = null;
-                        for (Event e : Database.getEventList())
-                            if (e.getTitle().equalsIgnoreCase(title))
-                                ev = e;
-                        if (ev != null) {
-                            System.out.println("Ticket Price is " + ev.getTicketPrice() + " write confirm to continue:");
-                            String confirmation = input.nextLine();
-                            if (confirmation.equalsIgnoreCase("confirm")) {
-                                if (buyTicket(ev)) {
-                                    System.out.println("Ticket purchased");
-                                } else {
-                                    System.out.println("Ticket is not purchased.. insufficient funds");
-                                }
-                            } else
-                            {
-                                System.out.println("Ticket is not purchased.. Balance unchanged");
-                            }
-                            break;
-                        }
-                    }
-                    break;
-
-                case 4:
-                    manageWallet();
-                    break;
-
-                case 5:
-                    manageProfile();
-                    break;
-
-                case 6:
-                    manageInterests();
-                    break;
-
-                case 7:
-                    return; // Logout
-
-                default:
-                    System.out.println("Invalid input! Please choose between 1 and 7:");
-            }
-        }
-    }
-
     // Helper methods
-    private void displayMainMenu() {
-        System.out.println("========================================");
-        System.out.println("Dashboard");
-        System.out.println("========================================");
-        System.out.println("1: View Events\n2: View my tickets \n3: Buy ticket\n4: My wallet");
-        System.out.println("5: Check Profile\n6: Manage Interests\n7: Logout");
-    }
 
     private short getValidChoice(int min, int max) {
         while (true) {
@@ -142,40 +63,6 @@ public class Attendee extends User
             input.nextLine(); // Consume newline
             updateWallet(amount, walletChoice);
         }
-    }
-
-    private void manageProfile() {
-        while (true) {
-            displayProfileMenu();
-            short profileChoice = getValidChoice(1, 6);
-
-            switch (profileChoice) {
-                case 1:
-                    changeUsername();
-                    break;
-
-                case 2:
-                    changePassword();
-                    break;
-
-                case 3:
-                    changeAddress();
-                    break;
-
-                case 4:
-                    return; // Exit profile
-            }
-        }
-    }
-
-    private void displayProfileMenu() {
-        System.out.println("========================================");
-        System.out.println("Profile");
-        System.out.println("========================================");
-        System.out.println("Username            1: Change Username\n" + getUserName());
-        System.out.println("Password            2: Change Password\n" + getPassword());
-        System.out.println("Address             3: Change address\n" + getAddress());
-        System.out.println("ID                  4: Exit Profile\n" + getId());
     }
 
     // helper methods
@@ -239,21 +126,31 @@ public class Attendee extends User
         this.address = address.trim();
     }
 
-    public boolean buyTicket(Event e){
-        if (e.isAvailable()){
-            if(!PaymentService.transferFunds(wallet, e.getOrganizer().getWallet(), e.getTicketPrice()))
-            {
-                return false;
-            }
+    public boolean buyTicket(Event e) {
+        if (!e.isAvailable()) {
+            return false;
+        }
+
+        double ticketPrice = e.getTicketPrice();
+        if (ticketPrice < 1e-9) {
             Ticket ticket = e.generateTicket();
             ticketList.add(ticket);
             e.addAttendee(this);
             return true;
         }
-        else{
+
+        boolean paid = PaymentService.transferFunds(wallet, e.getOrganizer().getWallet(), ticketPrice);
+        if (!paid) {
             return false;
         }
+
+        Ticket ticket = e.generateTicket();
+        System.out.println(ticket);
+        ticketList.add(ticket);
+        e.addAttendee(this);
+        return true;
     }
+
 
     public void viewMyTickets()
     {
@@ -274,25 +171,11 @@ public class Attendee extends User
         else if (choice == 2) {    wallet.deductFunds(amount);    }
     }
 
-    public String getAddress() {     return this.address;      }
-
     public ArrayList<Ticket> getMyTickets() {
         return ticketList;
     }
 
-    public Gender getGender() {   return this.gender;   }
 
-    public void setGender(int select) 
-    {    
-                if (select == 1) 
-                {
-                    this.gender = Gender.MALE;
-                } 
-                else if (select == 2) 
-                {
-                    this.gender = Gender.FEMALE;
-                }
-    }
 
     public ArrayList<myCategory> getInterests() {
         return interestList;
@@ -302,16 +185,17 @@ public class Attendee extends User
         this.interestList = interests;
     }
 
-    public static int getAttendeeCount() {    return attendeeCount;    }
-
-    public void showAttendeeDetails()
+    public void addInterest(String interest)
     {
-        System.out.println("Attendee ID: " + this.ID);
-        System.out.println("Attendee Username: " + this.userName);
-        System.out.println("Gender: " + this.gender);
-        System.out.println("Address: " + this.address);
+        this.interestList.add(CategoryManager.findCategory(interest));
     }
 
+    public void removeInterest(String interest)
+    {
+        this.interestList.remove(CategoryManager.findCategory(interest));
+    }
+
+    public static int getAttendeeCount() {    return attendeeCount;    }
 
     private void manageInterests() {
         // Get all available categories
@@ -372,6 +256,10 @@ public class Attendee extends User
             names.add(category.getName());
         }
         return names;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
     }
 
     @Override

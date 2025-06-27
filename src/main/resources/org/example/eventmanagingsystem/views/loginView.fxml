@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="loginPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleShowRegister" prefHeight="444.0" prefWidth="779.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eventmanagingsystem.managers.LoginManager">
+<GridPane fx:id="loginPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="779.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eventmanagingsystem.managers.LoginManager">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="130.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="10.0" prefWidth="217.0" />
@@ -264,7 +264,7 @@
                               <Insets bottom="15.0" top="15.0" />
                            </VBox.margin>
                         </Separator>
-                        <Label fx:id="registerLink" onMouseClicked="#handleRegister" style="-fx-cursor: hand;" text="Don't have an account? Register">
+                        <Label fx:id="registerLink" onMouseClicked="#handleShowRegister" style="-fx-cursor: hand;" text="Don't have an account? Register">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin></Label>
